@@ -1,7 +1,7 @@
-export function CardIcon(){
+export function CardIcon(props){
     return (
         <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-          <i className="bi bi-file-earmark-text"></i>
+          <i className={props.image}></i>
         </div>
       );
 }
