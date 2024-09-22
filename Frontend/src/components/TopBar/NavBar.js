@@ -1,14 +1,6 @@
 import { ProfileHeaderItem } from "./ProfileNavBar/ProfileHeaderItem"
 import {ProfileItem} from "./ProfileNavBar/ProfileItem"
 export function NavBar(){
-const setCookies = () =>{
-    res.cookie('token', jwt, {
-        httpOnly: true,
-        secure: true,     // Ensure this is true in production (HTTPS)
-        sameSite: 'Strict'  // Protect against CSRF
-      });
-}
-setCookies()
     return (
     <nav className="header-nav ms-auto">
     <ul className="d-flex align-items-center">
@@ -161,7 +153,7 @@ setCookies()
     </li>
 
     <li className="nav-item dropdown pe-3">
-        <span>Login </span>
+        <a href="/login"><span>Login </span></a>
         <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
         <img src="https://media.licdn.com/dms/image/v2/D4E03AQFF0VT-XUvCvg/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1699855179024?e=1732147200&v=beta&t=SP4TuAm64iWVIIOWI6eogyZLadYFr1mRgqqgDaL6P-k" alt="Profile" className="rounded-circle" />
 
