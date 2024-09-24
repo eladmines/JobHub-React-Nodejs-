@@ -12,6 +12,7 @@ import { TopBar } from './components/TopBar/TopBar';
 import { SideBar } from './components/SideBar/SideBar';
 import { DashBoard } from './pages/DashBoard';
 import { Jobs } from './pages/jobs';
+import { Login } from './pages/login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<DashBoard />} />
           <Route path="/Jobs" element={<Jobs />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
       </div>
     </Router>
