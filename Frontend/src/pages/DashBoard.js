@@ -1,11 +1,10 @@
-import { Title } from '../components/Title';
-import { Card } from '../components/Card/Card';
-
-import { CardIcon } from '../components/Card/CardIcon';
-import { Table } from '../components/Table/Table';
-import { TrafficChart } from '../components/TrafficChart';
-import { NewsJobs } from '../components/NewJobs';
-
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import {CardIcon} from '../components/Card/CardIcon';
+import {Table} from '../components/Table/Table';
+import {Title} from '../components/Title';
+import {NewsJobs} from '../components/NewJobs';
+import {TrafficChart} from '../components/TrafficChart';
 
 export function DashBoard() {
     const topCards = [
@@ -27,47 +26,60 @@ export function DashBoard() {
         { Date: "23.9.2024", Company: "Adobe", Role: "Creative Director", Status: "Pending" },
         { Date: "24.9.2024", Company: "Salesforce", Role: "Business Analyst", Status: "Active" }
     ];
+  return (
+    <main id="main" className="main">
+      <Container>
+        {/* Page Title */}
+        <Title className="pagetitle" title="DashBoard" size="h1" />
 
-    return (
-        <main id="main" class="main">
-            <Title class="pagetitle" title="DashBoard" size="h1" />
-            <section class="section dashboard">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="row">
-                            {topCards.map((item, index) => (
-                                <div key={index} class="col-xxl-4 col-md-6">
-                                    <Card class={`card info-card ${item.class}`} showFilter={true}>
-                                     
-                                            <Title class="card-title" title={item.title} size="h5" />
-                                            <div class="d-flex align-items-center">
-                                                <CardIcon image={item.icon} />
-                                                <div class="ps-3">
-                                                    <Title class="ps-3" title="146" size="h6" />
-                                                </div>
-                                            </div>
-                                      
-                                    </Card>
-                                </div>
-                            ))}
+        <section className="section dashboard">
+          <Row>
+            {/* Left Column */}
+            <Col lg={8}>
+              <Row>
+                {/* Top Cards */}
+                {topCards.map((item, index) => (
+                  <Col key={index} xxl={4} md={6}>
+                    <Card className={`info-card ${item.class}`}>
+                      <Card.Body>
+                        <Title className="card-title" title={item.title} size="h5" />
+                        <div className="d-flex align-items-center">
+                          <CardIcon image={item.icon} />
+                          <div className="ps-3">
+                            <Title className="ps-3" title="146" size="h6" />
+                          </div>
                         </div>
-                        <Card size="col-xxl-12 col-md-12" class="card info-card sales-card" title="Your last applications" time="Today" number="" showFilter={false} showIcon={false} >
-
-                        <Title class="card-title" title="Last applications" size="h5" />
-                            <Table colsHeader={colsHeader} dataTable={dataTable} />
-                      
+                      </Card.Body>
                     </Card>
-                    </div>
+                  </Col>
+                ))}
+              </Row>
 
-                    <div class="col-lg-4">
-                        <NewsJobs/>
-                        <Card class="card" >
-                        <Title class="card-title" title="Companies" size="h5" />
-                            <TrafficChart />
-                        </Card>
-                    </div>
-                </div>
-            </section>
-        </main>
-    );
+              <Card className="info-card sales-card">
+                <Card.Header>
+                  <Title className="card-title" title="Your last applications" size="h5" />
+                </Card.Header>
+                <Card.Body>
+                  <Table colsHeader={colsHeader} dataTable={dataTable} />
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col lg={4}>
+              <NewsJobs />
+              <Card className="card">
+                <Card.Body>
+                  <Title className="card-title" title="Companies" size="h5" />
+                  <TrafficChart />
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </section>
+      </Container>
+
+    </main>
+  );
 }
+
+
