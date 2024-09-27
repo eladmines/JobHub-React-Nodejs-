@@ -1,42 +1,76 @@
-import { Card } from "../components/Card/Card"
-import { Title } from "../components/Title"
-export function Jobs(){
-    return(
-        <main id="main" class="main">
-        <h1>Jobs</h1>
-        <a href="#">
-        <Card size="col-xxl-12 col-md-12" class="card info-card sales-card" title="Your last applications" time="Today" number="" showFilter={false} showIcon={false} >
-            <div class="row">
-            <div class="col-lg-2">
-            <img
-        src="https://www.logo.wine/a/logo/Microsoft_Store/Microsoft_Store-Logo.wine.svg"
-        style={{ width: '100%', height: '100%', objectFit: 'contain' }} // Ensures the image fills the parent
-        alt="Microsoft Store Logo"
-      />
-                </div>
-                <div class="col-lg-9">
-                <Title class="pagetitle" title="Software Engineer - Microsoft" size="h1" />
-                <div class="row">
-  <div class="col-auto">
-    <Title class="pagetitle" title="Location: Yokneam" size="h5" />
-  </div>
-  <div class="col-auto">
-    <Title class="pagetitle" title="Posted: 20.10.2010" size="h5" />
-  </div>
-</div>
-                <div class="row">
-                <span>Bachelor’s or Master’s degree in Computer Science, Engineering, or a related field.<br/>Proficiency in object-oriented programming and modern software development frameworks.<br/>Experience with cloud platforms like Azure, AWS, or Google Cloud.<br/>Strong problem-solving and debugging skills, with a passion for building reliable and scalable software.</span>
-                </div>
-                </div>
-                <div class="col-lg-1">
-                    <h5>Save Job</h5>
-                    <h5>Applied</h5>
-                </div>
-            </div>
-        </Card>
-        </a>
-        </main>
-    )
+import React, { useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import { Container, Row, Col } from "react-bootstrap";
+import { JobActionButtons } from "../components/JobActionButtons";
+import { Image } from "../components/Image";
+import { Button } from "../components/Button";
 
-  
+export function Jobs() {
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/"); // Update with your server URL
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        
+        const result = await response.json();
+        console.log("result", result);
+        setJobs(result);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const qualifications = [
+    "A Bachelors or Master’s degree in Computer Science or equivalent field",
+    "4+ years of industry software development experience",
+    "2+ years of experience designing, implementing, and operating distributed systems",
+    "Experience in Golang is desirable, .NET, C#, C++, Java",
+    "Experience with large scale distributed systems and microservices",
+    "Kubernetes, GoLang expertise is highly desirable",
+  ];
+
+  return (
+    <main id="main" className="main">
+      <Container>
+        <h5 className="pagetitle">Jobs</h5>
+        <Card className="">
+          <Row className="g-0">
+            <Col lg={1} className="d-flex align-items-center justify-content-center">
+              <Image
+                src="https://www.logo.wine/a/logo/Microsoft_Store/Microsoft_Store-Logo.wine.svg"
+                alt="Microsoft"
+                style={{ width: "100%", height: "auto" }}
+              />
+            </Col>
+            <Col lg={9}>
+              <Card.Body>
+                <h5 className="card-title">
+                  Microsoft
+                  <span> | 02/04/2012</span><br />
+                  <span>Tel-Aviv</span>
+                </h5>
+                <ul>
+                  {qualifications.map((qualification, index) => (
+                    <li key={index}>{qualification}</li>
+                  ))}
+                </ul>
+                <Card.Text></Card.Text>
+              </Card.Body>
+            </Col>
+            <Col lg={2} className="d-flex flex-column align-items-center justify-content-center">
+              <JobActionButtons/>
+            </Col>
+          </Row>
+        </Card>
+      </Container>
+    </main>
+  );
 }

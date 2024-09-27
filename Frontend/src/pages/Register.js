@@ -1,29 +1,28 @@
 import React from 'react';
 import { Card, Container } from 'react-bootstrap';
-import { LoginForm } from '../components/Login/LoginForm';
+import { RegisterForm } from '../components/Register/RegisterForm';
 
-export function Login() {
+export function Register() {
   return (
     <main id="main" className="main">
       <Container 
         className="d-flex" 
-       
       >
         <Card className="mb-3">
           <Card.Body className="pt-4 pb-2">
-            {/* Title Section */}
             <div className="pt-4 pb-2 text-center">
               <Card.Title as="h5" className="fs-4">
-                Login to Your Account
+              Create an Account
               </Card.Title>
               <Card.Text className="small text-muted">
-                Enter your username & password to login
+              Enter your personal details to create account
               </Card.Text>
             </div>
-            <LoginForm />
+            <RegisterForm />
           </Card.Body>
         </Card>
       </Container>
     </main>
   );
 }
+
