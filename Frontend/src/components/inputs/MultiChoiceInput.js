@@ -9,18 +9,15 @@ export function MultiChoiceInput({handleChildren,choices,name}) {
 
     if (checked) {
       setSelectedcheckboxes((prevcheckboxes) => [...prevcheckboxes, value]);
-      
     } else {
       setSelectedcheckboxes((prevcheckboxes) =>
         prevcheckboxes.filter((tech) => tech !== value)
       );
-      
-    }
-    
+    } 
   };
 
   useEffect(() => {
-    handleChildren({name}, selectedcheckboxes);
+    handleChildren(name, selectedcheckboxes);
   }, [selectedcheckboxes]);
 
   return (

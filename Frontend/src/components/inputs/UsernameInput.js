@@ -1,44 +1,42 @@
 import React from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
-import { Label } from '../Label'; // Assuming Label is a custom component
 import {useState} from 'react'
 
-  
-
-export function UsernameInput() {
+export function UsernameInput({checkValidInputs}) {
   const [error, setError] = useState('');
-
+  
   const validateUsername = (value) => {
     if (!value) {
       setError('Username is required');
+      return false;
     } else if (!value.includes('@')) {
       setError('Username must include "@"');
+      return false;
     } else {
       setError('');
+      return true;
     }
   };
 
   const handleChange = (event) => {
-    validateUsername(event.target.value);
+    const res = validateUsername(event.target.value);
+    checkValidInputs('username',[event.target.value,res]);
   };
 
   return (
     <>
-      <Label value="Username">Username</Label>
       <InputGroup hasValidation>
         <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
         <Form.Control
           type="text"
           name="username"
-          id="yourUsername"
-          required
-          aria-describedby="inputGroupPrepend"
+          id="username"
           placeholder="Enter your username"
           onChange={handleChange}
-          isInvalid={!!error}
+          isInvalid={error}
         />
         <Form.Control.Feedback type="invalid">
-          {error || 'Please enter your username.'}
+          {error}
         </Form.Control.Feedback>
       </InputGroup>
     </>

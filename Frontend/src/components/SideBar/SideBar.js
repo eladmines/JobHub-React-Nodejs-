@@ -1,33 +1,37 @@
-import {NavItem} from './NavItem'
-export function SideBar(){
-    const JobsDropMenu = ["All Jobs","Saved Jobs"]
-    const ApplicationsDropMenu = ["My Applications","Active Applications"]
-    const ConnectionsDropMenu = ["My Connections"]
-    const TasksDropMenu = ["My Tasks"]
-    const MeetupsDropMenu = ["My Tasks"]
-    return(
-<aside id="sidebar" class="sidebar">
+import { NavItem } from './NavItem';
 
-<ul class="sidebar-nav" id="sidebar-nav">
+export function SideBar() {
+    const navItems = [
+        { name: "Jobs", icon: "bi bi-menu-button-wide", target: "jobs-nav", menu: ["All Jobs", "Saved Jobs"] },
+        { name: "Applications", icon: "bi bi-journal-text", target: "applications-nav", menu: ["My Applications", "Active Applications"] },
+        { name: "Connections", icon: "bi bi-journal-text", target: "connections-nav", menu: ["My Connections"] },
+        { name: "Tasks", icon: "bi bi-menu-button-wide", target: "tasks-nav", menu: ["My Tasks"] },
+        { name: "Meetups", icon: "bi bi-journal-text", target: "meetups-nav", menu: ["My Meetups"] },
+    ];
 
+    return (
+        <aside id="sidebar" className="sidebar">
+            <ul className="sidebar-nav" id="sidebar-nav">
+                <li className="nav-item">
+                    <a className="nav-link" href="/">
+                        <i className="bi bi-grid"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
-  <li class="nav-item">
-    <a class="nav-link " href="/">
-      <i class="bi bi-grid"></i>
-      <span>Dashboard</span>
-    </a>
-  </li>
-  <NavItem name="Jobs" class="bi bi-menu-button-wide" target="jobs-nav" menu={JobsDropMenu}/>
-  <NavItem name="Applications" class="bi bi-journal-text" target="applications-nav" menu={ApplicationsDropMenu}/>
-  <NavItem name="Connections" class="bi bi-journal-text" target="connections-nav" menu={ConnectionsDropMenu}/>
-  <NavItem name="Tasks" class="bi bi-menu-button-wide" target="tasks-nav" menu={TasksDropMenu}/>
-  <NavItem name="Meetups" class="bi bi-journal-text" target="meetups-nav" menu={MeetupsDropMenu}/>
-  <li class="nav-heading">Pages</li>
+                {navItems.map((item, index) => (
+                    <NavItem 
+                        key={index}
+                        name={item.name} 
+                        className={item.icon} 
+                        target={item.target} 
+                        menu={item.menu} 
+                    />
+                ))}
 
- 
-
-</ul>
-
-</aside>
-    )
+                {/* Pages heading */}
+                <li className="nav-heading">Pages</li>
+            </ul>
+        </aside>
+    );
 }

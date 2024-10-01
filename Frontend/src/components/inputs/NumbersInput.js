@@ -17,15 +17,13 @@ export function NumbersInput({checkValidInputs,name}) {
         }
     }
 
-    const handleChange = (event) => {
+    const handleChange = (event,) => {
         const res = validateIsNumber(event.target.value);
-        checkValidInputs('experience',[event.target.value,res]);
+        checkValidInputs(name,[event.target.value,res]);
         
     };
         
 
-
-    
     return (
         <Fragment>
         <InputGroup hasValidation>

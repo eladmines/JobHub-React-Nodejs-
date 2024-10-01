@@ -1,6 +1,6 @@
 export function Table(props){
     return(
-            <div class="card-body">
+            <div className="card-body">
               <table className="table table-striped">
   <thead className="thead-dark">
     <tr>

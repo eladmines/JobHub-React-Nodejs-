@@ -11,7 +11,6 @@ export function Login() {
       >
         <Card className="mb-3">
           <Card.Body className="pt-4 pb-2">
-            {/* Title Section */}
             <div className="pt-4 pb-2 text-center">
               <Card.Title as="h5" className="fs-4">
                 Login to Your Account

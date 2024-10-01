@@ -5,6 +5,7 @@ export function TextInput({name,placeholder,handleChildren}) {
   const handleChange = (event) => {
     handleChildren(name,[event.target.value]);
 };
+
   return (
     <Fragment>
       <InputGroup hasValidation>
@@ -15,7 +16,6 @@ export function TextInput({name,placeholder,handleChildren}) {
           onChange={handleChange}
         />
         <Form.Control.Feedback type="invalid">
-          
         </Form.Control.Feedback>
       </InputGroup>
     </Fragment>

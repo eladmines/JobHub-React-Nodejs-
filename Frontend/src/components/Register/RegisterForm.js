@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import { UsernameInput } from '../inputs/UsernameInput';
-import { PasswordInput } from '../inputs/PasswordInput';
-import {Input} from '../inputs/Input';
+import { UsernameInput } from '../Inputs/UsernameInput';
+import { PasswordInput } from '../Inputs/PasswordInput';
+import {TextInput} from '../Inputs/TextInput';
 import {createUser} from '../../services/User/createUser';
+import { NumbersInput } from '../Inputs/NumbersInput';
+import { ListInput } from '../Inputs/ListInput.js';
+import {MultiChoiceInput} from '../Inputs/MultiChoiceInput'
+import { technologies, jobRoles } from '../../constants/RegisterPage.js';
 
 export function RegisterForm() {
-  const [validForm, setValidForm] = useState({ username: false, password: false });
-
+  const [validForm, setValidForm] = useState({ username: false, password: false, experience:false });
+  
   const handleDataFromChildren = (key, isValid) => {
+    
     setValidForm((prevValidForm) => ({
       ...prevValidForm,
       [key]: isValid,
@@ -16,20 +21,24 @@ export function RegisterForm() {
   };
 
 
-  const disableLoginButton = () => {
-    return !(validForm['username'] && validForm['password']);
+  const disableRegisterButton = () => {
+
+    return !(validForm['username'][1] && validForm['password'][1] && validForm['experience'][1]);
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     const username = validForm.username;
     const password = validForm.password;
-
+    const experience = validForm.experience;
+    const role = validForm.Role;
+    const company = validForm.Company;
+    const skills = validForm.Skills;
+    console.log(validForm)
     if (username && password) {
       try {
-        const userData = { username:username[0], password:password[0] };
-        await createUser(userData); // Pass the state to the service
-       
+        const userData = { username:username[0], password:password[0],experience:experience[0],role:role[0] ,company:company[0],skills:skills};
+        await createUser(userData);
       } catch (error) {
         console.error("Registration error:", error);
       }
@@ -46,16 +55,22 @@ export function RegisterForm() {
           <PasswordInput checkValidInputs={handleDataFromChildren} />
         </Col>
         <Col xs={12}>
-          <Input name="Role" placeholder="Role" />
+          <ListInput options = {jobRoles} name="Role" handleChildren={handleDataFromChildren}/>
         </Col>
         <Col xs={12}>
-        <Input name="Company" placeholder="Company" />
+          <TextInput name="Company" placeholder="Company" handleChildren={handleDataFromChildren}/>
+        </Col>
+        <Col xs={12}>
+          <NumbersInput checkValidInputs={handleDataFromChildren} name="experience" placeholder="Experience" />
+        </Col>
+        <Col xs={12}>
+          <MultiChoiceInput name="Skills" choices = {technologies} handleChildren={handleDataFromChildren}/>
         </Col>
         <Col xs={12}>
           <Button
             type="submit"
             className="btn btn-primary w-100"
-            disabled={disableLoginButton()}
+            disabled={disableRegisterButton()}
           >
             Sign-up
           </Button>
