@@ -8,9 +8,7 @@ export function Card(props,children){
         <div className="card-body">
         {props.children}
         </div>
-        
       </div>
-      
     </div>
   );
 }
