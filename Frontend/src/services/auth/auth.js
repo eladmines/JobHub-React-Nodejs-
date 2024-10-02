@@ -1,0 +1,26 @@
+const API_URL = "http://localhost:5000/auth";
+
+export const auth = async (userData) => {
+  console.log("Sending authentication request...");
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+      credentials: 'include',
+    });
+
+    if (res.ok) {
+      const result = await res.json();
+      return { success: true, data: result };
+    } else {
+      const errorData = await res.json();
+      return { success: false, message: errorData.message || 'Authentication failed' };
+    }
+  } catch (error) {
+    console.error("Error during authentication:", error);
+    return { success: false, message: 'An error occurred. Please try again.' };
+  }
+};
