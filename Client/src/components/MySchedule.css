@@ -1,0 +1,12 @@
+.datepicker-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if needed */
+    margin: 20px 0; /* Add margin for spacing */
+  }
+
+  .react-datepicker__header  {
+    background-color: rgb(233, 248, 253);
+    color: #007bff;  /* Change to the color you want */
+    font-weight: bold;  /* Optionally make the day names bold */
+  }
