@@ -1,10 +1,8 @@
-const authModel = require('../models/userModel');
+const authService = require('../services/authService');
 
-async function auth(req,res){
-    const jobs = await jobsModel.getAllJobs();
-    return jobs;
+async function authLogin(user){
+    const user1 = await authService.authLogin(user);
+    return user1;
 }
 
-module.exports = {
-    getJobs,
-};
+module.exports = { authLogin };
