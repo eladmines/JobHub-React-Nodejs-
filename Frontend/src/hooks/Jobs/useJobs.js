@@ -22,5 +22,5 @@ export const useJobs = () => {
     fetchData();
   }, []);
 
-  return { jobs, loading, error }; // Make sure to return an object
+  return { jobs, loading, error };
 };

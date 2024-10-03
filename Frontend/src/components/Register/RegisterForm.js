@@ -8,12 +8,11 @@ import { NumbersInput } from '../Inputs/NumbersInput';
 import { ListInput } from '../Inputs/ListInput.js';
 import {MultiChoiceInput} from '../Inputs/MultiChoiceInput'
 import { technologies, jobRoles } from '../../constants/RegisterPage.js';
-
+import { useNavigate } from 'react-router-dom';
 export function RegisterForm() {
   const [validForm, setValidForm] = useState({ username: false, password: false, experience:false });
-  
+  const navigate = useNavigate();
   const handleDataFromChildren = (key, isValid) => {
-    
     setValidForm((prevValidForm) => ({
       ...prevValidForm,
       [key]: isValid,
@@ -22,7 +21,6 @@ export function RegisterForm() {
 
 
   const disableRegisterButton = () => {
-
     return !(validForm['username'][1] && validForm['password'][1] && validForm['experience'][1]);
   };
 
@@ -34,11 +32,15 @@ export function RegisterForm() {
     const role = validForm.Role;
     const company = validForm.Company;
     const skills = validForm.Skills;
-    console.log(validForm)
+    
     if (username && password) {
       try {
         const userData = { username:username[0], password:password[0],experience:experience[0],role:role[0] ,company:company[0],skills:skills};
-        await createUser(userData);
+        var res = await createUser(userData);
+        if (res) {
+          navigate('/login');
+        }
+        
       } catch (error) {
         console.error("Registration error:", error);
       }

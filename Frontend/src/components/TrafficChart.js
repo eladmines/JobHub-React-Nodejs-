@@ -5,10 +5,8 @@ export function TrafficChart() {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    // Initialize the chart
     const chartInstance = echarts.init(chartRef.current);
 
-    // Set the chart options
     chartInstance.setOption({
       tooltip: {
         trigger: 'item',
@@ -48,7 +46,6 @@ export function TrafficChart() {
       ],
     });
 
-    // Clean up the chart instance on component unmount
     return () => {
       chartInstance.dispose();
     };

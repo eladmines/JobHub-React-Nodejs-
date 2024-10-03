@@ -28,8 +28,7 @@ export function SideBar() {
                         menu={item.menu} 
                     />
                 ))}
-
-                {/* Pages heading */}
+                
                 <li className="nav-heading">Pages</li>
             </ul>
         </aside>

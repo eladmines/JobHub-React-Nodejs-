@@ -1,6 +1,6 @@
-const API_URL = "http://localhost:5000/auth";
+const API_URL = "http://localhost:5000/jwtValidation";
 
-export const auth = async (userData) => {
+export const jwtValidation = async (userData) => {
   try {
     const res = await fetch(API_URL, {
       method: "POST",

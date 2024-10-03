@@ -1,11 +1,11 @@
 const { Client } = require('pg');
 
 const client = new Client({
-    database: "postgres",
-    user: "jobby",
-    password: "12345678",
-    host: "jobby.czkaa4kseikm.us-east-1.rds.amazonaws.com",
-    port: 5432,
+    database: "*",
+    user: "*",
+    password: "*",
+    host: "*",
+    port: "*",
     ssl: {
         require: true,
         rejectUnauthorized: false,
