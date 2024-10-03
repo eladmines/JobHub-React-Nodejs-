@@ -1,18 +1,19 @@
-const { Sequelize } = require('sequelize');
+const { Client } = require('pg');
 
-const sequelize = new Sequelize({
+const client = new Client({
     database: "postgres",
-    username: "jobby",
+    user: "jobby",
     password: "12345678",
     host: "jobby.czkaa4kseikm.us-east-1.rds.amazonaws.com",
     port: 5432,
-    dialect: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true, // This will help you. But you will see nwe error
-        rejectUnauthorized: false // This line will fix new error
-      }
+    ssl: {
+        require: true,
+        rejectUnauthorized: false,
     },
-  });
+});
 
-module.exports = sequelize;
+client.connect()
+    .then(() => console.log("Connected to PostgreSQL"))
+    .catch(err => console.error("Connection error", err.stack));
+
+module.exports = client;

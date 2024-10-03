@@ -1,9 +1,9 @@
-const sequelize = require('../config/db');
+const client = require('../config/db');
 
 async function getAllJobs(){
  const query = "SELECT * FROM JOBS ";
- const [rows] = await sequelize.query(query);
- return rows; 
+ const rows = await client.query(query);
+ return rows.rows; 
 }
 
 module.exports = {
