@@ -1,6 +1,7 @@
 const client = require('../config/db');
 const bcrypt = require('bcrypt');
 
+
 async function createUser(userData) {
   const hashedPassword = await bcrypt.hash(userData['password'], 10);
 
@@ -20,31 +21,30 @@ async function createUser(userData) {
   ];
 
   try {
-      const result = await client.query(query, values);
-      return result.rowCount > 0 ? result.rows[0]?.id : null;
+    const result = await client.query(query, values);
+    return result.rowCount > 0 ? result.rows[0]?.id : null;
   } catch (error) {
-      console.error("Error inserting user:", error);
-      throw error;
+    console.error("Error inserting user:", error);
+    throw error; 
   }
 }
-
 
 async function getUserName(id) {
   const query = `
-    SELECT firstname,lastname,role FROM USERS WHERE id=$1;
+    SELECT firstname, lastname, role 
+    FROM users 
+    WHERE id = $1;
   `;
 
-  const values = [
-   id,
-  ];
+  const values = [id];
 
   try {
-      const result = await client.query(query, values);
-      return result.rows[0];
+    const result = await client.query(query, values);
+    return result.rows[0];
   } catch (error) {
-      console.error("Error inserting user:", error);
-      throw error;
+    console.error("Error retrieving user:", error);
+    throw error;
   }
 }
 
-module.exports = { createUser,getUserName };
+module.exports = { createUser, getUserName };
