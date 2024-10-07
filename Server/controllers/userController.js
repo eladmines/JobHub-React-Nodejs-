@@ -1,8 +1,13 @@
 const userService = require('../services/userService');
 
 async function createUser(user){
-    const user1 = await userService.createUser(user);
-    return user1;
+    const res = await userService.createUser(user);
+    return res;
 }
 
-module.exports = { createUser };
+async function getUserData(user){
+    const userData = await userService.getUserData(user);
+    return userData;
+}
+
+module.exports = { createUser,getUserData };

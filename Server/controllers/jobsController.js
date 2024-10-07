@@ -5,6 +5,12 @@ async function getJobs(req,res){
     return jobs;
 }
 
+async function getSavedJobsNumber(req,res){
+    const jobs = await jobsModel.getSavedJobsNumber(req);
+    return jobs;
+}
+
 module.exports = {
     getJobs,
+    getSavedJobsNumber,
 };
