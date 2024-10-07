@@ -28,4 +28,23 @@ async function createUser(userData) {
   }
 }
 
-module.exports = { createUser };
+
+async function getUserName(id) {
+  const query = `
+    SELECT firstname,lastname,role FROM USERS WHERE id=$1;
+  `;
+
+  const values = [
+   id,
+  ];
+
+  try {
+      const result = await client.query(query, values);
+      return result.rows[0];
+  } catch (error) {
+      console.error("Error inserting user:", error);
+      throw error;
+  }
+}
+
+module.exports = { createUser,getUserName };
