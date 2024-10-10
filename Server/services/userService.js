@@ -4,5 +4,10 @@ const createUser = async (userData) => {
     return newUser;
   };
   
-module.exports = { createUser };
+  const getUserData = async (userData) => {
+    const user = await userModel.getUserName(userData);
+    return user;
+  };
+  
+module.exports = { createUser,getUserData };
        
