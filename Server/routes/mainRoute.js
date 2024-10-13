@@ -11,7 +11,7 @@ router.get('/', jwtValidation, async (req, res) => {
 
         const savedJobsCount = savedJobsCounter.length ? savedJobsCounter[0]['row_count'] : 0;
         const applicationCount = applicationsCounter.length ? applicationsCounter[0]['row_count'] : 0;
-
+        
         res.status(200).json({ savedJobsCount, applicationCount });
     } catch (error) {
         console.error("Error occurred:", error);

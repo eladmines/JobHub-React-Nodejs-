@@ -5,18 +5,21 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const jwtValidation = require('../middleware/jwtValidation');
 
-router.post('/auth', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const user = await authController.authLogin(req.body);
+        console.log("user",user)
         if (user) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+            console.log("here",user)
+            const accessToken = jwt.sign(user.id, process.env.ACCESS_TOKEN_SECRET);
             res.cookie('token', accessToken, {
                 httpOnly: true, 
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'Strict',
                 maxAge: 3600000 
             });
-            return res.status(200).json({ success: true, message: 'Authentication successful' });
+           
+            return res.status(200).json({ success: true, user: user});
         } else {
             return res.status(401).json({ success: false, message: 'Authentication failed' });
         }

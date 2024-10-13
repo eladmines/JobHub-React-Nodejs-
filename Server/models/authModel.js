@@ -13,7 +13,7 @@ async function authLogin(userData) {
     }
 
     const isPasswordValid = await bcrypt.compare(userData.password, user.password);
-    return isPasswordValid ? user.id : null;
+    return isPasswordValid ? user : null;
   } catch (error) {
     console.error('Error during authentication:', error);
     throw error;

@@ -3,7 +3,7 @@ const jobsController = require('../controllers/jobsController');
 const jwtValidation = require('../middleware/jwtValidation');
 const router = express.Router();
 
-router.get('/getSavedJobs', jwtValidation, async (req, res) => {
+router.get('/', jwtValidation, async (req, res) => {
     try {
         const result = await jobsController.getSavedJobsNumber(req.user);
         res.status(200).json(result[0]['row_count']);

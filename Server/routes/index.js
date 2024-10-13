@@ -9,7 +9,7 @@ const mainRoute = require('./mainRoute');
 const topBarRoute = require('./topBarRoute');
 const applicationsRoute = require('./applicationsRoute');
 
-// Mount routes under their respective base paths
+
 router.use('/jobs', jobsRoute);
 router.use('/user', userRoute);
 router.use('/auth', authRoute);

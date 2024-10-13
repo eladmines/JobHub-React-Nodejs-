@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 
 
 async function createUser(userData) {
-  const hashedPassword = await bcrypt.hash(userData['password'], 10);
+  console.log("pass",userData['password'][0])
+  const hashedPassword = await bcrypt.hash(userData['password'][0], 10);
 
   const query = `
     INSERT INTO users (firstName, lastName, email, password, experience, role, company, skills)
@@ -12,12 +13,12 @@ async function createUser(userData) {
   `;
 
   const values = [
-    userData['email'],
+    userData['username'][0],
     hashedPassword,    
-    userData['experience'],  
-    userData['role'],       
-    userData['company'],    
-    userData['skills'],
+    userData['Experience'],  
+    userData['Role'],       
+    userData['Company'],    
+    userData['Languages'],
   ];
 
   try {

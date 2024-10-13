@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/logout', (req, res) => {
+router.get('/', (req, res) => {
     res.clearCookie('token', { 
         secure: true, 
         httpOnly: true, 

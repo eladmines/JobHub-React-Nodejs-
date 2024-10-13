@@ -1,9 +1,32 @@
 const client = require('../config/db');
 
 
-async function getAllJobs() {
-  const query = "SELECT * FROM JOBS";
+async function getAllJobs(user_id) {
+  const query = `
+  SELECT 
+    jobs.*,
+    CASE WHEN jobs_saved.job_id IS NOT NULL THEN 1 ELSE 0 END AS saved,
+    jobs_applicated.date AS applicated_date
+FROM 
+    jobs
+LEFT JOIN 
+    jobs_saved ON jobs.job_id = jobs_saved.job_id AND jobs_saved.user_id = $1
+LEFT JOIN 
+    jobs_applicated ON jobs.job_id = jobs_applicated.job_id AND jobs_applicated.user_id = $1;`;
+    const values = [user_id];
+
+  const result = await client.query(query,values);
+  
+  return result.rows; 
+}
+
+async function getAllJobsNoUserId() {
+  const query = `
+  SELECT * FROM JOBS`;
+    const values = [user_id];
+
   const result = await client.query(query);
+  
   return result.rows; 
 }
 
@@ -54,10 +77,20 @@ async function saveJob(userId, jobId) {
   await client.query(query, values);
 }
 
+async function removeSaveJob(userId, jobId) {
+    const query = `
+      DELETE FROM jobs_saved WHERE user_id=$1 AND job_id=$2;
+    `;
+    const values = [userId, jobId];
+    await client.query(query, values);
+  }
+
 // Exporting functions
 module.exports = {
   getAllJobs,
   getSavedJobsNumber,
   getSavedJobs,
-  saveJob
+  saveJob,
+  removeSaveJob,
+  getAllJobsNoUserId
 };

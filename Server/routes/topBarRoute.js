@@ -3,8 +3,9 @@ const router = express.Router();
 const jwtValidation = require('../middleware/jwtValidation');
 const userController = require('../controllers/userController');
 
-router.get('/topbar', jwtValidation, async (req, res) => {
+router.get('/', jwtValidation, async (req, res) => {
     try {
+      console.log("oooooooooooooo")
       const userData = await userController.getUserData(req.user);
       
       res.status(200).json(userData);

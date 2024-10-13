@@ -1,11 +1,11 @@
 const { Client } = require('pg');
 
 const client = new Client({
-    database: "*",
-    user: "*",
-    password: "*",
-    host: "*",
-    port: "*",
+    database: "***", 
+    user: "***",        
+    password: "***",       
+    host: "****",
+    port: "*****",               
     ssl: {
         require: true,
         rejectUnauthorized: false,
