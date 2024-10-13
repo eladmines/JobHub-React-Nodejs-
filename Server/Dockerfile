@@ -7,14 +7,13 @@ WORKDIR /app
 # Install necessary build tools and Python for native module compilation
 RUN apk add --no-cache python3 make g++ 
 
-# Create a symlink for Python (required by node-gyp)
-RUN ln -sf /usr/bin/python3 /usr/bin/python
+
 
 # Copy package.json and package-lock.json first to leverage Docker caching
-COPY package*.json ./
+COPY package.json ./
 
 # Install dependencies using npm ci for a clean and reproducible install
-RUN npm ci
+RUN npm i
 
 # Rebuild bcrypt for the correct environment
 RUN npm rebuild bcrypt --build-from-source
@@ -23,7 +22,7 @@ RUN npm rebuild bcrypt --build-from-source
 COPY . .
 
 # Expose the necessary port (adjust if your app uses a different port)
-EXPOSE 3000
+EXPOSE 5000
 
 # Start the app in development mode
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
