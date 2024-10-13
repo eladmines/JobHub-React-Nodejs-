@@ -1,5 +1,5 @@
 import React from 'react';
-import { RecommendedJob } from './RecommendedJob'; // Import the RecommendedJob component
+import { RecommendedJob } from './RecommendedJob'; 
 
 export function RecommendedJobs() {
   const jobs = [
@@ -36,15 +36,18 @@ export function RecommendedJobs() {
   ];
 
   return (
-    <div className="card">
-      <div className="card-body pb-0">
-        <h5 className="card-title">Recommended For You<span> | Today</span></h5>
+    <Card className="mb-4">
+      <Card.Body className="">
+        <Card.Title>
+          Recommended For You <span>| Today</span>
+        </Card.Title>
         <div className="news">
           {jobs.map(job => (
             <RecommendedJob key={job.id} job={job} />
           ))}
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
+
   );
 }

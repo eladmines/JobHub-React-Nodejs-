@@ -3,7 +3,7 @@ const API_URL = "http://localhost:5000/jwtValidation";
 export const jwtValidation = async (userData) => {
   try {
     const res = await fetch(API_URL, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },

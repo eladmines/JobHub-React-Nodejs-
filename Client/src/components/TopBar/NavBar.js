@@ -1,32 +1,37 @@
 import { useState, useEffect } from 'react';
-import { useJwtValidation } from '../../hooks/useJwtValidation';
 import { Dropdown } from 'react-bootstrap';
 import { logout } from '../../services/logout';
-
+import { useFetchGet } from '../../hooks/useFetchGet';
+import { useSelector } from 'react-redux';
 export function NavBar() {
-  const { isAuthenticated } = useJwtValidation();
-  const [authenticated, setAuthenticated] = useState(isAuthenticated);
-
-  useEffect(() => {
-    setAuthenticated(isAuthenticated);
-  }, [isAuthenticated]);
+  const isLogged = useSelector(state => state);
+  
+  const { data: names, loading, error ,fetchData} = useFetchGet();
+  const [authenticated, setAuthenticated] = useState(false);
 
   const handleLogout = async () => {
     try {
       await logout();
       setAuthenticated(false);
+      localStorage.removeItem("isLogged")
       window.location.reload();
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+
+
   return (
     <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center">
         <li className="nav-item dropdown pe-3">
           <span className="d-none d-md-block ps-2">
-            {authenticated ? (
+            {isLogged ? ( // Check the authenticated state
               <Dropdown align="end">
                 <Dropdown.Toggle className="nav-link nav-profile d-flex align-items-center pe-0" id="dropdown-basic">
                   <img 
@@ -34,13 +39,13 @@ export function NavBar() {
                     alt="Profile" 
                     className="rounded-circle" 
                   />
-                  <span className="d-none d-md-block ps-2">K. Anderson</span>
+                  <span className="d-none d-md-block ps-2">E.MINES</span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className="dropdown-menu-arrow profile">
                   <Dropdown.ItemText>
-                    <h6>Kevin Anderson</h6>
-                    <span>Web Designer</span>
+                    <h6>Elad Mines</h6>
+                    <span>FULL STACK DEVELOPER</span>
                   </Dropdown.ItemText>
 
                   <Dropdown.Divider />

@@ -1,0 +1,5 @@
+.custom-badge {
+    background-color: transparent !important; /* Ensure the background is transparent */
+    border: 2px solid lightblue; /* Light blue border */
+    color: black; /* Text color */
+  }

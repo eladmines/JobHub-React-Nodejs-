@@ -1,10 +1,9 @@
-import React from 'react';
-import { Form, InputGroup } from 'react-bootstrap';
-import {useState} from 'react'
+import { useState, Fragment } from 'react';
+import { InputGroup, Form } from 'react-bootstrap';
 
-export function UsernameInput({checkValidInputs}) {
+export function UsernameInput({ value,checkValidInputs }) {
   const [error, setError] = useState('');
-  
+
   const validateUsername = (value) => {
     if (!value) {
       setError('Username is required');
@@ -16,15 +15,19 @@ export function UsernameInput({checkValidInputs}) {
       setError('');
       return true;
     }
+
   };
 
   const handleChange = (event) => {
     const res = validateUsername(event.target.value);
-    checkValidInputs('username',[event.target.value,res]);
+    checkValidInputs("username",[event.target.value,res])
+    console.log([event.target.value,res])
+   
+    
   };
 
   return (
-    <>
+    <Fragment>
       <InputGroup hasValidation>
         <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
         <Form.Control
@@ -32,13 +35,13 @@ export function UsernameInput({checkValidInputs}) {
           name="username"
           id="username"
           placeholder="Enter your username"
-          onChange={handleChange}
-          isInvalid={error}
+          onChange={handleChange} // Handle the change
+          isInvalid={error} // Show invalid state based on error (convert to boolean)
         />
         <Form.Control.Feedback type="invalid">
           {error}
         </Form.Control.Feedback>
       </InputGroup>
-    </>
+    </Fragment>
   );
 }

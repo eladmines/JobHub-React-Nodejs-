@@ -1,0 +1,32 @@
+.floating-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #007bff; /* Fallback background color */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+.floating-icon:hover {
+  transform: scale(1.1); /* Enlarge slightly on hover */
+}
+
+.icon-image {
+  width: 40px; /* Adjust size of the image */
+  height: 40px;
+  border-radius: 50%; /* Ensures the image fits in the circle */
+  object-fit: cover; /* Ensures the image is centered and cropped if needed */
+}
+
+
+.floating-icon {
+  pointer-events: auto; /* Enable interactions with the floating icon */
+}

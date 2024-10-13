@@ -1,7 +1,9 @@
 export function ComponentNavItem(props){
     return (
-      <li>
-        <i className="bi bi-circle"></i><span>{props.name}</span>
-    </li>
+     
+      <a href={props.link}><li className="list-group-item d-flex align-items-center">
+            <i className="bi bi-circle me-2"></i>
+            <span>{props.name}</span>
+        </li></a>
     )
 }

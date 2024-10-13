@@ -1,7 +1,6 @@
 export function NewJobs() {
   return (
-      <div className="card">
-          <div className="card-body pb-0">
+    <>
               <h5 className="card-title">Recommended For You<span> | Today</span></h5>
               <div className="news">
                   <div className="post-item clearfix">
@@ -36,7 +35,7 @@ export function NewJobs() {
 
               </div>
 
-          </div>
-      </div>
+     
+      </>
   )
 }

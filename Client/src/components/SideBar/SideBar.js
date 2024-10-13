@@ -1,13 +1,40 @@
+
 import { NavItem } from './NavItem';
 
 export function SideBar() {
     const navItems = [
-        { name: "Jobs", icon: "bi bi-menu-button-wide", target: "jobs-nav", menu: ["All Jobs", "Saved Jobs"] },
-        { name: "Applications", icon: "bi bi-journal-text", target: "applications-nav", menu: ["My Applications", "Active Applications"] },
-        { name: "Connections", icon: "bi bi-journal-text", target: "connections-nav", menu: ["My Connections"] },
-        { name: "Tasks", icon: "bi bi-menu-button-wide", target: "tasks-nav", menu: ["My Tasks"] },
-        { name: "Meetups", icon: "bi bi-journal-text", target: "meetups-nav", menu: ["My Meetups"] },
-    ];
+        { 
+          name: "Jobs", 
+          icon: "bi bi-briefcase", // Briefcase icon for Jobs
+          target: "jobs-nav", 
+          menu: [["All Jobs", "/jobs"], ["Saved Jobs", "/savedjobs"]]
+        },
+        { 
+          name: "Applications", 
+          icon: "bi bi-file-earmark-text", // File icon for Applications
+          target: "applications-nav", 
+          menu: [["My Applications", "/applications"]] 
+        },
+        { 
+          name: "Connections", 
+          icon: "bi bi-people", // People icon for Connections
+          target: "connections-nav", 
+          menu: [["My Connections", "/connections"]] 
+        },
+        { 
+          name: "Tasks", 
+          icon: "bi bi-check-square", // Check square icon for Tasks
+          target: "tasks-nav", 
+          menu: [["My Tasks", "/tasks"]] 
+        },
+        { 
+          name: "Meetups", 
+          icon: "bi bi-calendar-event", // Calendar icon for Meetups
+          target: "meetups-nav", 
+          menu: [["My Meetups", "/meetups"]] 
+        },
+      ];
+      
 
     return (
         <aside id="sidebar" className="sidebar">
@@ -26,6 +53,8 @@ export function SideBar() {
                         className={item.icon} 
                         target={item.target} 
                         menu={item.menu} 
+                        icon={item.icon}
+                     
                     />
                 ))}
                 

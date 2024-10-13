@@ -1,17 +1,17 @@
-// src/hooks/useJobs.js
 import { useEffect, useState } from "react";
-import {getJobs} from '../../services/Jobs/getJobs';
-
-export const useJobs = () => {
-  const [jobs, setJobs] = useState([]);
+import {getSavedJobs} from '../../services/Jobs/getSavedJobs';
+export const useSavedJobs = () => {
+    
+  const [savedJobsCount, setSavedJobsCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
-        const result = await getJobs();
-        setJobs(result);
+        const result = await getSavedJobs();
+        setSavedJobsCount(result);
       } catch (err) {
         setError(err);
       } finally {
@@ -22,5 +22,5 @@ export const useJobs = () => {
     fetchData();
   }, []);
 
-  return { jobs, loading, error };
+  return { savedJobsCount, loading, error };
 };

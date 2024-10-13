@@ -1,6 +1,7 @@
 const API_URL = "http://localhost:5000/auth";
 
 export const auth = async (userData) => {
+  
   try {
     const res = await fetch(API_URL, {
       method: "POST",

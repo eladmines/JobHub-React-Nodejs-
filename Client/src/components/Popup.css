@@ -1,0 +1,43 @@
+/* Popup.css */
+.popup-overlay {
+    position: fixed;
+    bottom: 80px; /* Position above the floating icon */
+    right: 20px; /* Align with the floating icon */
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears on top */
+  }
+  
+  .popup-content {
+    background: white;
+    padding: 20px; /* Keep consistent padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 300px; /* Limit width */
+    width: 90%;
+    transition: all 0.3s ease; /* Smooth appearance */
+  }
+  
+  /* Ensure no size change on hover */
+  .popup-content:hover {
+    transform: none !important; /* Corrected placement of !important */
+  }
+  
+  
+  .popup-button {
+    padding: 10px 15px; /* Consistent padding */
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s; /* Only background changes */
+  }
+  
+  .popup-button:hover {
+    background: #0056b3; /* Darker shade on hover */
+  }
+  

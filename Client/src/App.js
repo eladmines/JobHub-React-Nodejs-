@@ -6,30 +6,46 @@ import './assets/vendor/quill/quill.bubble.css';
 import './assets/vendor/remixicon/remixicon.css';
 import './assets/vendor/simple-datatables/style.css';
 import './assets/css/style.css';
+import './assets/vendor/bootstrap/js/bootstrap.bundle.min.js';
 
 import { TopBar } from './components/TopBar/TopBar';
 import { SideBar } from './components/SideBar/SideBar';
 import { DashBoard } from './pages/DashBoard';
 import { Jobs } from './pages/jobs';
+import { SavedJobs } from './pages/savedJobs';
 import { Login } from './pages/login';
 import { Register } from './pages/Register';
+import {Applications} from './pages/applications.js'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
+
 function App() {
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
+
+  // Conditionally rendering TopBar and SideBar only if not on login/register
+  const showNavigation = location.pathname !== '/login' && location.pathname !== '/register';
 
   return (
     <div>
-      <TopBar />
-      {/* Render SideBar only if the path is not /register */}
-      {(location.pathname !== '/Register' && location.pathname !== '/login') && <SideBar />}
+      {/* Render TopBar and SideBar only once if not on login/register */}
+      {showNavigation && (
+        <>
+          <TopBar />
+          <SideBar />
+        </>
+      )}
 
-      <Routes>
-        <Route exact path="/" element={<DashBoard />} />
-        <Route path="/Jobs" element={<Jobs />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-      </Routes>
+      {/* Page content will be wrapped in a separate div for different routes */}
+      <div className="page-content">
+        <Routes>
+          <Route exact path="/" element={<DashBoard />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/savedjobs" element={<SavedJobs />} />
+          <Route path="/applications" element={<Applications />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
     </div>
   );
 }

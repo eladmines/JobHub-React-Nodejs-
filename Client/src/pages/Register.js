@@ -1,8 +1,15 @@
 import React from 'react';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container,Form } from 'react-bootstrap';
 import { RegisterForm } from '../components/Register/RegisterForm';
 
 export function Register() {
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      cv: e.target.files[0],
+    });
+  };
+
   return (
     <main id="main" className="main">
       <Container 
@@ -19,6 +26,7 @@ export function Register() {
               </Card.Text>
             </div>
             <RegisterForm />
+           
           </Card.Body>
         </Card>
       </Container>

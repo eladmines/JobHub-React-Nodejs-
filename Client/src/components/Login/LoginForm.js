@@ -3,12 +3,17 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import { UsernameInput } from '../Inputs/UsernameInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../services/auth/auth';
-import {Modal} from '../Modal'
+import { auth } from '../../services/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { signIn } from '../../actions/signIn';
+
 export function LoginForm() {
-  const [validForm, setValidForm] = useState({ username: false, password: false });
-  const [showModal, setShowModal] = useState(false);
+  const isLogged = useSelector(state => state);
+  const dispatch = useDispatch(); 
+
+  const [validForm, setValidForm] = useState({ username: ['',false], password: ['',false] });
   const [errorMessage, setErrorMessage] = useState('');
+
   const navigate = useNavigate();
   const handleDataFromChildren = (key, isValid) => {
     setValidForm((prevValidForm) => ({
@@ -17,9 +22,19 @@ export function LoginForm() {
     }));
   };
 
+  const handleStateChange = (name, value) => {
+    const newValue = value.target ? value.target.value : value;
+    setValidForm((prevValidForm) => ({
+      ...prevValidForm,
+      [name]: newValue,
+    }));
+    console.log("new",[name])
+  };
+
 
   const disableLoginButton = () => {
-    return !(validForm['username'][0] && validForm['password'][0]);
+    console.log("here",validForm)
+    return !(validForm['username'][1] && validForm['password'][1]);
   };
 
   const handleLogin = async (e) =>{
@@ -30,12 +45,15 @@ export function LoginForm() {
     }
     var res = await auth(loginDetails);
     if(res.success){
-      navigate('/')
+      dispatch(signIn());
+      localStorage.setItem("isLogged",true);
+      localStorage.setItem("skills",res.data.user["skills"]);
+      console.log("res",res)
+      //navigate('/')
     }
     else{
       setErrorMessage('Login failed. Please check your credentials.');
     }
-    
   };
 
   return (
@@ -43,13 +61,12 @@ export function LoginForm() {
       <Form className="needs-validation" noValidate onSubmit={handleLogin}>
         <Row className="g-3">
           <Col xs={12}>
-            <UsernameInput checkValidInputs={handleDataFromChildren} />
+            <UsernameInput  checkValidInputs={handleDataFromChildren} />
           </Col>
   
           <Col xs={12}>
             <PasswordInput checkValidInputs={handleDataFromChildren} />
           </Col>
-  
           <Col xs={12}>
             <Button
               type="submit"

@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker'; // Ensure you import DatePicker from 
 import 'react-datepicker/dist/react-datepicker.css'; // Import CSS for DatePicker
 import './MySchedule.css'; // Import your CSS file for additional styles
 
-const MySchedule = () => { // Rename the component to avoid confusion with the imported DatePicker
+export const MySchedule = () => { // Rename the component to avoid confusion with the imported DatePicker
   const [startDate, setStartDate] = useState(new Date()); // Initialize state for date
 
   return (

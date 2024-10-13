@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Card, Container } from 'react-bootstrap';
 import { LoginForm } from '../components/Login/LoginForm';
-import {jwtValidation} from '../services/auth/jwtValidation'
 export function Login() {
-  useEffect(() => {
-    jwtValidation();
-  }, []);
+  
   return (
     <main id="main" className="main">
       <Container 

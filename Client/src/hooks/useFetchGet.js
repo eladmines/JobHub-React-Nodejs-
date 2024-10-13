@@ -18,7 +18,6 @@ export function useFetchGet() {
       setLoading(false);
     }
   };
-
-  // Return fetchData function to call it on-demand, not automatically
+  
   return { data, loading, error, fetchData };
 }
