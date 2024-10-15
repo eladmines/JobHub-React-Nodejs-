@@ -1,101 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
-import { Card } from 'react-bootstrap';
+import { getMonth } from '../utils/genericHelpers';
+import Card from "react-bootstrap/Card";
+import { useFetchGet } from '../hooks/useFetchGet';
+import { LoadingBar } from "../components/LoadingBar";
 
 export function HeatmapChart() {
-  const daysInMonth = Array.from({ length: 31 }, (_, i) => `${i + 1}`); // Days 1-31
-  const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May']; // Display these months on y-axis
+  const { data: applications, loading, error, fetchData } = useFetchGet();
+  const [appsMonth, setAppsMonth] = useState([]);
+  const currentMonthNum = new Date().getMonth();
+  const daysInMonth = Array.from({ length: 31 }, (_, i) => `${i + 1}`);
+  
+  const monthsOfYear = [
+    getMonth(currentMonthNum),
+    getMonth(currentMonthNum + 1),
+    getMonth(currentMonthNum + 2),
+  ];
+  
+  useEffect(() => {
+    const fetchApplications = async () => {
+      await fetchData("http://localhost:5000/applications/getApplicationsByMonth/");
+    };
 
-  // Define which days are valid for each month (e.g., Feb only has 28 days)
-  const daysInEachMonth = {
-    Jan: 31,
-    Feb: 28,
-    Mar: 31,
-    Apr: 30,
-    May: 31,
-  };
+    fetchApplications();
+    setAppsMonth(applications)
+  }, []);
 
-  // Generate series data with 'null' for invalid dates (non-existent dates will be marked with 'X')
-  const [series, setSeries] = useState(
-    monthsOfYear.map((month) => ({
-      name: month,
-      data: Array.from({ length: daysInMonth.length }, (_, i) =>
-        i + 1 > daysInEachMonth[month] ? null : Math.floor(Math.random() * 0) // Mark invalid dates with 'null'
-      ),
-    }))
-  );
+  useEffect(() => {
+      setAppsMonth(applications); 
+  }, [applications]);
+  
 
-  const [options, setOptions] = useState({
+  const options = {
     chart: {
       type: 'heatmap',
+      toolbar: {
+        show: false,
+      },
     },
     plotOptions: {
       heatmap: {
         shadeIntensity: 0.5,
         colorScale: {
           ranges: [
-            {
-              from: 0,
-              to: 10,
-              color: '#98FB98', // Light Green (Low)
-              name: 'Low',
-            },
-            {
-              from: 11,
-              to: 30,
-              color: '#32CD32', // Medium Green
-              name: 'Medium',
-            },
-            {
-              from: 31,
-              to: 60,
-              color: '#006400', // Dark Green (High)
-              name: 'High',
-            },
+            { from: 0, to: 1, color: '#e3e3e3', name: 'Low' },
+            { from: 2, to: 30, color: '#32CD32', name: 'Medium' },
+            { from: 31, to: 60, color: '#006400', name: 'High' },
           ],
         },
       },
+    },
+    grid: {
+      padding: { left: 0, right: 0, top: 0, bottom: 0 },
     },
     xaxis: {
       categories: daysInMonth, // Display days of the month on x-axis
     },
     yaxis: {
       labels: {
-        formatter: function (val) {
-          return monthsOfYear[val]; // Display months as row labels
-        },
-        offsetX: -10, // Move the month labels closer to the chart
+        offsetX: -10,
       },
     },
-    
     dataLabels: {
       enabled: true,
-      formatter: function (val, opts) {
-        // If the value is 'null', display an 'X'
-        return val === null ? 'X' : '';
-      },
-      style: {
-        fontSize: '14px',
-        colors: ['#ff0000'], // Red for the 'X' marker
-      },
+      formatter: (val) => (val === null ? 'X' : ''),
+      style: { fontSize: '14px', colors: ['#ff0000'] },
     },
     tooltip: {
       enabled: true,
       y: {
-        formatter: function (val) {
-          return val !== null ? `${val} applications` : 'Invalid date'; // Show 'Invalid date' for null values
-        },
+        formatter: (val) => (val !== null ? `${val} applications` : 'Invalid date'),
       },
     },
-  });
+  };
+
+  if (loading) {
+    return <LoadingBar title="Jobs" />;
+  }
 
   return (
     <Card className="card">
       <Card.Header>
-        <Card.Title>Your Applications <span>| Jobs Interviews & Meetups</span></Card.Title>
+        <Card.Title>Job Applications Heatmap <span>| Track Your Activity</span></Card.Title>
       </Card.Header>
       <Card.Body>
-        <Chart options={options} series={series} type="heatmap" height={350} />
+        <Chart options={options} series={applications} type="heatmap" height={140} />
       </Card.Body>
     </Card>
   );
