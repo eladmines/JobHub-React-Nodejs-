@@ -48,4 +48,16 @@ router.post('/deleteSaveApp', jwtValidation, async (req, res) => {
   }
 });
 
+router.get('/getApplicationsByMonth', jwtValidation, async (req, res) => {
+  try {
+    
+    const result = await applicationController.getApplicationsByMonth(req.user);
+    console.log("result",result)
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error fetching applications:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 module.exports = router;

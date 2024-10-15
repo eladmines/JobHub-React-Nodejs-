@@ -5,7 +5,6 @@ async function saveApp(userId,jobId){
 }
 
 async function deleteSaveApp(userId,jobId){
-    console.log("job",jobId)
     const jobs = await applicationsModel.deleteSaveApp(userId,jobId)
     return jobs;
 }
@@ -20,6 +19,11 @@ async function getApplications(req,res){
     return apps;
 }
 
+async function getApplicationsByMonth(req,res){
+    const apps = await applicationsModel.getApplicationsByMonth(req);
+    return apps;
+}
+
   
-module.exports = { saveApp,getApplicationsCounter,getApplications,deleteSaveApp };
+module.exports = { saveApp,getApplicationsCounter,getApplications,deleteSaveApp,getApplicationsByMonth };
        
