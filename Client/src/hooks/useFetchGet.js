@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getApiService } from '../services/getApiService';
 
 export function useFetchGet() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState(null);
 
