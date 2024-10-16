@@ -1,21 +1,33 @@
 import { useState } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
+import { NotLoggedInModal } from '../NotLoggedInModal';
 
 export function ToggleButtonExample({ sendDataToParent }) {
-  const [radioValue, setRadioValue] = useState('0');
-  
+  const [radioValue, setRadioValue] = useState(() => {
+    const isLoggedIn = localStorage.getItem("skills") !== null;
+    return isLoggedIn ? '1' : '0';
+  });
+  const [showModal, setShowModal] = useState(false)
   const radios = [
     { name: 'Show All Jobs', value: '0' },
     { name: 'Filter jobs by my skills', value: '1' },
   ];
 
-  // This function sends data to the parent when invoked
-  function handleClick(data) {
-    sendDataToParent(data);
+  const handleCloseModel = () =>{
+    setShowModal(false);
+    setRadioValue('0')
   }
 
-  // Component return statement
+  function handleClick(data) {
+    if(!localStorage.getItem('skills')){
+      setShowModal(true);
+    }
+    else{
+      sendDataToParent(data);
+    }
+  }
+
   return (
     <>
       <ButtonGroup>
@@ -29,16 +41,17 @@ export function ToggleButtonExample({ sendDataToParent }) {
             value={radio.value}
             checked={radioValue === radio.value}
             onChange={(e) => {
-              setRadioValue(e.currentTarget.value); // Update radioValue
-              handleClick(e.currentTarget.value); // Send "Hello" to parent component
+              setRadioValue(e.currentTarget.value);
+              handleClick(e.currentTarget.value);
             }}
           >
             {radio.name}
           </ToggleButton>
         ))}
+        <NotLoggedInModal show={showModal} handleClose={handleCloseModel}/>
       </ButtonGroup>
+      
     </>
   );
 }
 
-export default ToggleButtonExample;
