@@ -15,7 +15,7 @@ export function DashBoard() {
   const { data: userData, loading, error, fetchData } = useFetchGet();
 
   useEffect(() => {
-    fetchData("http://localhost:5000/main");
+    fetchData("http://3.85.114.162:5000/main");
   }, []);
 
   if (loading) {
