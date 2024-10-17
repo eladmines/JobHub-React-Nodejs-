@@ -50,7 +50,6 @@ export function ToggleButtonExample({ sendDataToParent }) {
         ))}
         <NotLoggedInModal show={showModal} handleClose={handleCloseModel}/>
       </ButtonGroup>
-      
     </>
   );
 }
