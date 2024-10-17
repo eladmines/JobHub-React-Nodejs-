@@ -6,8 +6,6 @@ services:
       context: ./Client
       dockerfile: Dockerfile
     container_name: jobhub-client
-    ports:
-      - "3000:3000"  # Adjust if necessary
     networks:
       - app-network
 
@@ -17,7 +15,7 @@ services:
       dockerfile: Dockerfile
     container_name: jobhub-server
     ports:
-      - "5000:5000"  # Adjust if necessary
+      - "5000:5000"
     environment:
       POSTGRES_USER: "jobby"
       POSTGRES_PASSWORD: "12345678"
@@ -33,7 +31,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./Client/build:/usr/share/nginx/html  # Serve the React build output
     depends_on:
       - client
