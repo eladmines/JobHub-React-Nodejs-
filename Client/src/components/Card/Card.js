@@ -1,6 +1,6 @@
 import {Filter} from './Filter';
 
-export function Card(props,children){
+export function Card(props){
   return (
     <div className={props.size}>
       <div className={props.class}>
