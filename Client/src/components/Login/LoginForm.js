@@ -22,15 +22,6 @@ export function LoginForm() {
     }));
   };
 
-  const handleStateChange = (name, value) => {
-    const newValue = value.target ? value.target.value : value;
-    setValidForm((prevValidForm) => ({
-      ...prevValidForm,
-      [name]: newValue,
-    }));
-    console.log("new",[name])
-  };
-
 
   const disableLoginButton = () => {
     console.log("here",validForm)
@@ -48,8 +39,10 @@ export function LoginForm() {
       dispatch(signIn());
       localStorage.setItem("isLogged",true);
       localStorage.setItem("skills",res.data.user["skills"]);
-      console.log("res",res)
-      //navigate('/')
+      localStorage.setItem("role",res.data.user["role"]);
+      localStorage.setItem("firstname",res.data.user["firstname"]);
+      localStorage.setItem("lastname",res.data.user["lastname"]);
+      navigate('/')
     }
     else{
       setErrorMessage('Login failed. Please check your credentials.');
