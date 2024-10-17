@@ -27,15 +27,6 @@ export function SavedJobs() {
     }
   }, [jobs, inputSearchValue]);
 
-  const qualifications = [
-    "A Bachelors or Master’s degree in Computer Science or equivalent field",
-    "4+ years of industry software development experience",
-    "2+ years of experience designing, implementing, and operating distributed systems",
-    "Experience in Golang is desirable, .NET, C#, C++, Java",
-    "Experience with large scale distributed systems and microservices",
-    "Kubernetes, GoLang expertise is highly desirable",
-  ];
-
   const companies_images = {
     "Intel": "https://seeklogo.com/images/I/intel-new-2020-logo-21ED2748DD-seeklogo.com.png",
     "Amazon": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png",
@@ -72,11 +63,11 @@ export function SavedJobs() {
                     <span> | {job.job_company}</span><br />
                     <span>{job.job_location}</span>
                   </h5>
-                  <ul>
+                  {/*<ul>
                     {qualifications.map((qualification, index) => (
                       <li key={index}>{qualification}</li>
                     ))}
-                  </ul>
+                  </ul>*/}
                 </Card.Body>
               </Col>
               <Col lg={2} className="d-flex flex-column align-items-center justify-content-center">

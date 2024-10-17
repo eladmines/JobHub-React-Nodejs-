@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useNa } from 'react';
 import { Form, Row, Col, Button, Spinner } from 'react-bootstrap';
-import axios from 'axios';
 import { UsernameInput } from '../Inputs/UsernameInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
 import { TextInput } from '../Inputs/TextInput';
 import { NumbersInput } from '../Inputs/NumbersInput';
 import { Language } from '../Languages/Language';
 import { useFetchPost } from '../../hooks/useFetchPost';
+import { useNavigate } from "react-router-dom";
+
+import axios from 'axios';
 
 export function RegisterForm() {
-   const { fetchData } = useFetchPost();
+  const { data: res, loading1, fetchData } = useFetchPost();
   const [validForm, setValidForm] = useState({
     username: '',
     password: '',
+    FirstName: '',
+    LastName: '',
     Experience: '',
     Role: '',
     Company: '',
     cvFile: null,
     Languages: [],
   });
+
+  const navigate = useNavigate();
   
   const [newLanguage, setNewLanguage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -66,6 +72,7 @@ export function RegisterForm() {
 
   const handleStateChange = (name, value) => {
     const newValue = value.target ? value.target.value : value;
+    console.log(name,newValue)
     setValidForm((prevValidForm) => ({
       ...prevValidForm,
       [name]: newValue,
@@ -77,12 +84,18 @@ export function RegisterForm() {
     return !(validForm.username && validForm.password && validForm.Role && validForm.Company && validForm.Experience);
   };
 
-  const signOut = (e) =>{
-    e.preventDefault(validForm);
-    console.log("userData",validForm)
-    fetchData("http://localhost:5000/user/createuser", validForm)
-    
-  }
+  const signOut = async (e) => {
+    e.preventDefault();
+    await fetchData("http://localhost:5000/user/createuser", validForm);
+  };
+  
+  useEffect(() => {
+    if(res){
+      navigate("/login")
+    }else{
+      alert("Fail")
+    }
+  }, [res]);
 
   const fillFormUsingCV = async (e) => {
     e.preventDefault();
@@ -117,6 +130,8 @@ export function RegisterForm() {
           ...prevValidForm,
           Company: data.Company,
           username: data.Email,
+          FirstName: data.firstname,
+          LastName: data.lastname,
           Experience: data.Experience,
           Role: data.Role,
           Languages: data.Languages? data.Languages.split(', ').map(item => item.trim()):null,
@@ -167,6 +182,22 @@ export function RegisterForm() {
           />
         </Col>
 
+        <Col xs={12}>
+          <TextInput
+            name="FirstName"
+            placeholder="First Name"
+            value={validForm.FirstName}
+            onChange={(e) => handleStateChange('FirstName', e)}
+          />
+        </Col>
+        <Col xs={12}>
+          <TextInput
+            name="LastName"
+            placeholder="Last Name"
+            value={validForm.LastName}
+            onChange={(e) => handleStateChange('LastName', e)}
+          />
+        </Col>
         <Col xs={12}>
           <TextInput
             name="Role"

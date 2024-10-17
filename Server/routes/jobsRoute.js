@@ -4,6 +4,7 @@ const jwtValidation = require('../middleware/jwtValidation');
 const router = express.Router();
 
 router.get('/', jwtValidation,async (req, res) => {
+  
   try {
     var jobs;
     if(req.tokenExists){
@@ -11,7 +12,9 @@ router.get('/', jwtValidation,async (req, res) => {
     }else{
       jobs = await jobsController.getJobsNoUserId()
     }
+    console.log(req.user)
     res.status(200).json(jobs);
+    
   } catch (error) {
     console.error('Error fetching jobs:', error);
     res.status(500).json({ message: 'Internal server error' });

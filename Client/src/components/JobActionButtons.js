@@ -6,21 +6,18 @@ export function JobActionButtons({ id, saved, applicated_date }) {
   const { data, loading, error, fetchData } = useFetchPost();
   const [isSaved, setIsSaved] = useState(saved === 1);
   const [isApplied, setIsApplied] = useState(applicated_date === null);
-  const [showModal, setShowModal] = useState(false); // State for the modal
+  const [showModal, setShowModal] = useState(false);
 
 
   const handleCloseModel = () =>{
     setShowModal(false)
   }
-  function handleCloseModal(){
-    setShowModal(false)
-  }
+  
   const handleSaveJob = async (id) => {
     const storedSkills = localStorage.getItem("skills");
     if (!storedSkills || storedSkills.length === 0) {
-      // If skills are empty, show the modal
       setShowModal(true);
-      return; // Prevent further execution
+      return;
     }
     const payload = { jobId: id };
     if (!isSaved) {

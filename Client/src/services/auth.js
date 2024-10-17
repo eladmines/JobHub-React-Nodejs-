@@ -15,6 +15,7 @@ export const auth = async (userData) => {
     if (res.ok) {
       const result = await res.json();
       return { success: true, data: result };
+      
     } else {
       const errorData = await res.json();
       return { success: false, message: errorData.message || 'Authentication failed' };

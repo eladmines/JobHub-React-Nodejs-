@@ -12,8 +12,10 @@ export function useFetchPost(url,bodydata) {
       const result = await postApiService(url,bodydata);
       setData(result);
     } catch (error) {
+      
       setError(error);
     } finally {
+      
       setLoading(false);
     }
   };

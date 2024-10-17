@@ -9,6 +9,11 @@ async function getApplications(req,res){
     return apps;
 }
 
+async function getApplicationsByMonth(req,res){
+    const apps = await applicationsServices.getApplicationsByMonth(req);
+    return apps;
+}
+
 async function saveApp(userId,jobId){
     const jobs = await applicationsServices.saveApp(userId,jobId);
     return jobs;
@@ -19,4 +24,4 @@ async function deleteSaveApp(userId,jobId){
     return jobs;
 }
 
-module.exports = { getApplicationsCounter ,getApplications,saveApp,deleteSaveApp};
+module.exports = { getApplicationsCounter ,getApplications,saveApp,deleteSaveApp,getApplicationsByMonth};

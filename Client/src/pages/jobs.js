@@ -8,19 +8,18 @@ import { useFetchGet } from "../hooks/useFetchGet";
 import { LoadingBar } from "../components/LoadingBar";
 import {SearchBarInput} from '../components/Inputs/SearchBarInput';
 import { FaCode } from 'react-icons/fa'; 
-import {ToggleButtonExample} from '../components/Buttons/ToggleButton'
+import {ToggleButtonExample} from '../components/Buttons/ToggleButton';
+import { FaClock } from 'react-icons/fa';
+import { dateDifference } from "../utils/genericHelpers";
 export function Jobs() {
   const [inputSearchValue,setInputSearchValue] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [skills,setSkills] = useState([]);
   const { data: jobs, loading, error, fetchData } = useFetchGet();
 
-
-
   useEffect(() => {
     fetchData("http://localhost:5000/jobs/");
     setFilteredJobs(jobs)
-    console.log(jobs)
   }, []);
 
   useEffect(() => {
@@ -38,12 +37,12 @@ export function Jobs() {
         
         const companyMatch = job.job_company && job.job_company.toLowerCase().includes(inputSearchValue.toLowerCase());
   
-        // Check if any skills match the job qualifications using the current state of `skills`
+        
         const skillsMatch = skills.length > 0 && Array.isArray(job.job_qualifications) && skills.some(skill => 
           job.job_qualifications.includes(skill)
         );
   
-        // Return the final filter condition based on the skills state
+       
         if (skills.length === 0) {
           console.log("skills",skills)
           return titleMatch || qualificationsMatch || companyMatch;
@@ -59,20 +58,25 @@ export function Jobs() {
   
   
   function handleDataToggleBar(data) {
+    if(data == 1 && !localStorage.getItem('skills')){
+      
+      alert("ppp")
+    }
     if (data == 0) {
-      setSkills([]); // Clear skills if data is 0
+      setSkills([]); 
     } else {
       const storedSkills = localStorage.getItem('skills');
       
-      // Check if storedSkills exists and parse it into an array
+   
       if (storedSkills) {
-        const skillsArray = storedSkills.split(","); // Assuming skills are stored as a comma-separated string
-        setSkills(skillsArray); // Set the parsed array to state
+        const skillsArray = storedSkills.split(",");
+        setSkills(skillsArray);
       } else {
-        setSkills([]); // If no skills found in localStorage, set an empty array
+        setSkills([]);
       }
     }
   }
+  
   if (loading) {
     return <LoadingBar title="Jobs" />;
   }
@@ -82,12 +86,17 @@ export function Jobs() {
     "Intel": "https://seeklogo.com/images/I/intel-new-2020-logo-21ED2748DD-seeklogo.com.png",
     "Amazon": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png",
     "KLA": "https://cdn.brandfetch.io/idFmniVrcu/w/400/h/400/theme/dark/icon.jpeg?k=id64Mup7ac&t=1727233697514",
+    "paloalto": "https://cdn.worldvectorlogo.com/logos/palo-alto-networks-1.svg",
+    "Nvidia": "https://companieslogo.com/img/orig/NVDA-220e1e03.png?t=1722952498",
+    "Meta": "https://medialabgroup.co.uk/wp-content/uploads/2023/11/Meta.png"
   };
 
   const handleDataFromChildren = (val ) => {
     setInputSearchValue(val);
    
   };
+
+
 
   return (
     <main id="main" className="main">
@@ -98,14 +107,14 @@ export function Jobs() {
         <SearchBarInput getSearchFormValue={handleDataFromChildren}/>
         </Card>
         
-        <ToggleButtonExample sendDataToParent={handleDataToggleBar}/>
+        <ToggleButtonExample sendDataToParent={handleDataToggleBar} />
         {filteredJobs && filteredJobs.map((job, index) => (
           <Card key={index} className="card-hover">
             <div id={job.job_id}>
               <Row className="g-0">
                 <Col lg={1} className="d-flex align-items-center justify-content-center">
                   <Image
-                    src={companies_images[job.job_company] || "path/to/default/image.png"}
+                    src={companies_images[job.job_company]}
                     alt={job.job_company || "Company Logo"}
                     style={{ width: "100%", height: "auto" }}
                   />
@@ -114,12 +123,14 @@ export function Jobs() {
                   <Card.Body>
                     <h5 className="card-title">
                       {job.job_title}
-                      <span> | {job.job_company}</span><br />
+                      <span> | {job.job_company} , posted  {dateDifference(job.job_date)} days ago</span><br />
                       <span>{job.job_location}</span>
                     </h5>
+                   <h5 style={{ color: 'green', fontStyle: 'italic', fontSize: '0.8em' }}>
+                   <FaClock style={{ marginRight: '4px',color: 'grey' }} />{job.job_qualifications[job.job_qualifications.length - 1]}
+</h5>
                     {job.job_qualifications.slice(0, 4).map((qualification, index) => (
                         <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                            {/* Code icon */}
                             <FaCode style={{ marginRight: '8px' }} />
                             {qualification}
                         </li>

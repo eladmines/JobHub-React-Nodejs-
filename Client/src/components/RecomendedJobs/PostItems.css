@@ -1,0 +1,4 @@
+.news {
+    margin-top: 15px; /* Optional: space above the job list */
+    gap: 10px; /* Optional: space between job items */
+  }

@@ -1,4 +1,3 @@
-// In the file where languageIcons is defined
 export const languageIcons =  {
   Python: FaPython,
   Java: FaJava,

@@ -1,37 +1,32 @@
-import { useState, useEffect } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { logout } from '../../services/logout';
 import { useFetchGet } from '../../hooks/useFetchGet';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { signIn } from '../../actions/signIn';
+import { useDispatch } from 'react-redux';
 export function NavBar() {
+  const navigate = useNavigate();
   const isLogged = useSelector(state => state);
-  
-  const { data: names, loading, error ,fetchData} = useFetchGet();
-  const [authenticated, setAuthenticated] = useState(false);
-
+  const { fetchData } = useFetchGet();
+  const dispatch = useDispatch(); 
   const handleLogout = async () => {
     try {
-      await logout();
-      setAuthenticated(false);
-      localStorage.removeItem("isLogged")
-      window.location.reload();
+      await fetchData('http://localhost:5000/logout');
+      dispatch(signIn());
+      localStorage.removeItem("isLogged");
+      localStorage.removeItem("skills");
+      navigate('/login');
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-
 
   return (
     <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center">
         <li className="nav-item dropdown pe-3">
           <span className="d-none d-md-block ps-2">
-            {isLogged ? ( // Check the authenticated state
+            {isLogged ? (
               <Dropdown align="end">
                 <Dropdown.Toggle className="nav-link nav-profile d-flex align-items-center pe-0" id="dropdown-basic">
                   <img 
@@ -39,13 +34,13 @@ export function NavBar() {
                     alt="Profile" 
                     className="rounded-circle" 
                   />
-                  <span className="d-none d-md-block ps-2">E.MINES</span>
+                  <span className="d-none d-md-block ps-2">{localStorage.getItem('firstname')[0]}.{localStorage.getItem('lastname')}</span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className="dropdown-menu-arrow profile">
                   <Dropdown.ItemText>
-                    <h6>Elad Mines</h6>
-                    <span>FULL STACK DEVELOPER</span>
+                    <h6>{localStorage.getItem('firstname')} {localStorage.getItem('lastname')} </h6>
+                    <span>{localStorage.getItem('role')}</span>
                   </Dropdown.ItemText>
 
                   <Dropdown.Divider />

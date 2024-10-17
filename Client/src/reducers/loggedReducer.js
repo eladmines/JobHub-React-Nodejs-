@@ -6,3 +6,4 @@
             return localStorage.getItem('isLogged');
     }
 }
+

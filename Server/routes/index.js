@@ -8,7 +8,7 @@ const logoutRoute = require('./logout');
 const mainRoute = require('./mainRoute');
 const topBarRoute = require('./topBarRoute');
 const applicationsRoute = require('./applicationsRoute');
-
+const statsRoute = require('./statsRoute');
 
 router.use('/jobs', jobsRoute);
 router.use('/user', userRoute);
@@ -17,5 +17,5 @@ router.use('/logout', logoutRoute);
 router.use('/main', mainRoute);
 router.use('/topbar', topBarRoute);
 router.use('/applications', applicationsRoute);
-
+router.use('/stats',statsRoute );
 module.exports = router;

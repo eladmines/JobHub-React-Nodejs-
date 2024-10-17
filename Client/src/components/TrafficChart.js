@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef,useState } from 'react';
+import { useFetchGet } from '../hooks/useFetchGet';
 import * as echarts from 'echarts';
-
+import {Card} from 'react-bootstrap'
 export function TrafficChart() {
-  const chartRef = useRef(null);
+const chartRef = useRef(null);
 
-  useEffect(() => {
+useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
 
     chartInstance.setOption({
@@ -52,13 +53,20 @@ export function TrafficChart() {
   }, []);
 
   return (
-    
+    <Card className="card">
+    <Card.Title>
+      Companies stats <span>| Analyzing Job Scraping Data</span>
+    </Card.Title>
+    <Card.Body>
     <div
       id="trafficChart"
       ref={chartRef}
       style={{ minHeight: '400px' }}
       className="echart"
     ></div>
+    </Card.Body>
+  </Card>
+   
     
   );
 }

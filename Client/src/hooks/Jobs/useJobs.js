@@ -1,4 +1,3 @@
-// src/hooks/useJobs.js
 import { useEffect, useState } from "react";
 import {getJobs} from '../../services/Jobs/getJobs';
 

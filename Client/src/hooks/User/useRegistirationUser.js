@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createUser } from "../services/userService"; // Make sure to adjust the import path
+import { createUser } from "../services/userService";
 
 export const useRegistirationUser = () => {
 
@@ -10,7 +10,7 @@ export const useRegistirationUser = () => {
     try {
       const response = await createUser(userData);
       setSuccess(true);
-      return response; // Return response if needed
+      return response;
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {

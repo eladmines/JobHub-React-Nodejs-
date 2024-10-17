@@ -3,18 +3,25 @@ const bcrypt = require('bcrypt');
 
 
 async function createUser(userData) {
-  console.log("pass",userData['password'][0])
   const hashedPassword = await bcrypt.hash(userData['password'][0], 10);
 
   const query = `
-    INSERT INTO users (firstName, lastName, email, password, experience, role, company, skills)
-    VALUES ('', '', $1, $2, $3, $4, $5, $6::text[])
-    ON CONFLICT (email) DO NOTHING;
+ WITH ins AS (
+  INSERT INTO users (firstName, lastName, email, password, experience, role, company, skills)
+  VALUES ($3, $4, $1, $2, $5, $6, $7, $8::text[])
+  ON CONFLICT (email) DO NOTHING
+  RETURNING true AS inserted
+)
+SELECT COALESCE((SELECT inserted FROM ins), false) AS inserted;
+
   `;
 
+  
   const values = [
     userData['username'][0],
     hashedPassword,    
+    userData['FirstName'], 
+    userData['LastName'], 
     userData['Experience'],  
     userData['Role'],       
     userData['Company'],    
@@ -23,7 +30,8 @@ async function createUser(userData) {
 
   try {
     const result = await client.query(query, values);
-    return result.rowCount > 0 ? result.rows[0]?.id : null;
+    console.log(result.rows[0]['inserted'])
+    return result.rows[0]['inserted'];
   } catch (error) {
     console.error("Error inserting user:", error);
     throw error; 

@@ -8,4 +8,5 @@ export const logout = async () => {
       },
       credentials: 'include',
     });
+    localStorage.removeItem('skills');
 };

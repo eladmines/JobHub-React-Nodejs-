@@ -8,9 +8,7 @@ const jwtValidation = require('../middleware/jwtValidation');
 router.post('/', async (req, res) => {
     try {
         const user = await authController.authLogin(req.body);
-        console.log("user",user)
         if (user) {
-            console.log("here",user)
             const accessToken = jwt.sign(user.id, process.env.ACCESS_TOKEN_SECRET);
             res.cookie('token', accessToken, {
                 httpOnly: true, 
