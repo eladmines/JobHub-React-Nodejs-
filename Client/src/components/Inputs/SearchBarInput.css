@@ -1,17 +1,16 @@
 .search-input {
-    border: none; /* Removes the border */
-    outline: none; /* Removes the outline */
-    box-shadow: none; /* Removes any box shadow */
-    transition: border 0.2s ease; /* Optional: Adds a smooth transition */
+    border: none;
+    outline: none;
+    box-shadow: none;
+    transition: border 0.2s ease;
 }
 
-/* Change placeholder color */
+
 .search-input::placeholder {
-    color: #999; /* Change the placeholder color if needed */
+    color: #999;
 }
 
-/* When the input is focused */
+
 .search-input:focus {
-    border: none; /* Keep border removed on focus */
-    /* Optional: You can add styles like background color change here */
+    border: none;
 }

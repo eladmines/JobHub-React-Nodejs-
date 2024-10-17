@@ -35,8 +35,8 @@ export function UsernameInput({ value,checkValidInputs }) {
           name="username"
           id="username"
           placeholder="Enter your username"
-          onChange={handleChange} // Handle the change
-          isInvalid={error} // Show invalid state based on error (convert to boolean)
+          onChange={handleChange}
+          isInvalid={error}
         />
         <Form.Control.Feedback type="invalid">
           {error}

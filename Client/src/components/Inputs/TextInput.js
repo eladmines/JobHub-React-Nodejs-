@@ -9,12 +9,10 @@ export function TextInput({ name, placeholder, value, onChange }) {
           type="text"
           name={name}
           placeholder={placeholder}
-          value={value} // Bind the value to the input
-          onChange={onChange} // Handle the change
+          value={value} 
+          onChange={onChange}
         />
-        <Form.Control.Feedback type="invalid">
-          {/* Optional feedback message */}
-        </Form.Control.Feedback>
+        <Form.Control.Feedback type="invalid"/>
       </InputGroup>
     </Fragment>
   );

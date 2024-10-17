@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
-import { BiSearch } from 'react-icons/bi';  // Importing a search icon from react-icons
+import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
 import './SearchBarInput.css';
 export function SearchBarInput({getSearchFormValue}) {

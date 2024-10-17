@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import './CustomDropdown.css' // Import custom CSS for styling
+import './CustomDropdown.css'
 
 export function CustomDropdown() {
   const handleDropdownSelect = (eventKey) => {

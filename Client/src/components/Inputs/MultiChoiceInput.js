@@ -6,7 +6,6 @@ export function MultiChoiceInput({handleChildren,choices,name}) {
 
   const handleCheckboxChange = (event) => {
     const { value, checked } = event.target;
-
     if (checked) {
       setSelectedcheckboxes((prevcheckboxes) => [...prevcheckboxes, value]);
     } else {
@@ -21,7 +20,6 @@ export function MultiChoiceInput({handleChildren,choices,name}) {
   }, [selectedcheckboxes]);
 
   return (
-   
       <InputGroup>
         <Row>
           {choices.map((tech, index) => (
