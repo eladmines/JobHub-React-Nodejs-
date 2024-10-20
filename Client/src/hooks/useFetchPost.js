@@ -9,7 +9,7 @@ export function useFetchPost(url,bodydata) {
     setLoading(true);
     setError(null);
     try {
-      const result = await postApiService("http://localhost:5000"+url,bodydata);
+      const result = await postApiService("/api/"+url,bodydata);
 
       setData(result);
     } catch (error) {

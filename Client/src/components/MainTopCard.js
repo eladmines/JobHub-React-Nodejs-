@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
-import { CardIcon } from '../components/Card/CardIcon';
+import { CardIcon } from './Card/CardIcon';
 
 export function MainTopCard({ className, title, icon,count}) {
   return (

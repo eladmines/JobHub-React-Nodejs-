@@ -8,13 +8,13 @@ import './assets/vendor/simple-datatables/style.css';
 import './assets/css/style.css';
 import './assets/vendor/bootstrap/js/bootstrap.bundle.min.js';
 
-import { TopBar } from './components/TopBar/TopBar';
-import { SideBar } from './components/SideBar/SideBar';
-import { DashBoard } from './pages/DashBoard';
-import { Jobs } from './pages/jobs';
-import { SavedJobs } from './pages/savedJobs';
-import { Login } from './pages/login';
-import { Register } from './pages/Register';
+import { TopBar } from './components/TopBar/TopBar.js';
+import { SideBar } from './components/SideBar/SideBar.js';
+import { DashBoard } from './pages/DashBoard.js';
+import { Jobs } from './pages/jobs.js';
+import { SavedJobs } from './pages/savedJobs.js';
+import { Login } from './pages/login.js';
+import { Register } from './pages/Register.js';
 import {Applications} from './pages/applications.js'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 

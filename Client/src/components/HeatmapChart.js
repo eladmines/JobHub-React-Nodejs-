@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Chart from 'react-apexcharts';
 import { getMonth } from '../utils/genericHelpers';
-import Card from "react-bootstrap/Card";
+import Card from "react-bootstrap/esm/Card";
 import { useFetchGet } from '../hooks/useFetchGet';
-import { LoadingBar } from "../components/LoadingBar";
+import { LoadingBar } from "./LoadingBar";
 
 export function HeatmapChart() {
   const { data: applications, loading, error, fetchData } = useFetchGet();

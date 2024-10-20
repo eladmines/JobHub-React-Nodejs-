@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import ToggleButton from 'react-bootstrap/ToggleButton';
+import ButtonGroup from 'react-bootstrap/esm/ButtonGroup';
+import ToggleButton from 'react-bootstrap/esm/ToggleButton';
 import { NotLoggedInModal } from '../NotLoggedInModal';
 
 export function ToggleButtonExample({ sendDataToParent }) {

@@ -115,7 +115,7 @@ export function RegisterForm() {
     });
 
     try {
-      const response = await axios.post('http://localhost:5000/user/cv', formData, {
+      const response = await axios.post('/api/user/cv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

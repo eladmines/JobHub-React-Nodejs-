@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from "react";
-import Card from "react-bootstrap/Card";
+import Card from "react-bootstrap/esm/Card";
 import { Container, Row, Col,Button } from "react-bootstrap";
 import { JobActionButtons } from "../components/JobActionButtons";
 import { Image } from "../components/Image";
