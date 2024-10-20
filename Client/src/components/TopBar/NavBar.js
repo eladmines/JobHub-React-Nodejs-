@@ -11,7 +11,7 @@ export function NavBar() {
   const dispatch = useDispatch(); 
   const handleLogout = async () => {
     try {
-      await fetchData('http://localhost:5000/logout');
+      await fetchData('logout');
       dispatch(signIn());
       localStorage.removeItem("isLogged");
       localStorage.removeItem("skills");
@@ -73,7 +73,7 @@ export function NavBar() {
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
-              <a href="/login">Login</a>
+             <span> <a href="/login">Sign-in</a> | <a href="/Register">Sign up</a></span>
             )}
           </span>
         </li>

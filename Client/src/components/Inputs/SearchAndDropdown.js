@@ -4,7 +4,6 @@ import './CustomDropdown.css'
 
 export function CustomDropdown() {
   const handleDropdownSelect = (eventKey) => {
-    console.log(`Selected: ${eventKey}`);
   };
 
   return (

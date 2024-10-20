@@ -12,9 +12,7 @@ router.get('/', jwtValidation,async (req, res) => {
     }else{
       jobs = await jobsController.getJobsNoUserId()
     }
-    console.log(req.user)
     res.status(200).json(jobs);
-    
   } catch (error) {
     console.error('Error fetching jobs:', error);
     res.status(500).json({ message: 'Internal server error' });

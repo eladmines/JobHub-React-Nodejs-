@@ -41,6 +41,7 @@ router.post('/deleteSaveApp', jwtValidation, async (req, res) => {
 
   try {
     const result = await applicationController.deleteSaveApp(req.user, jobId);
+    console.log(result,result)
     res.status(200).json(result);
   } catch (error) {
     console.error('Error deleting saved application:', error);
@@ -52,7 +53,7 @@ router.get('/getApplicationsByMonth', jwtValidation, async (req, res) => {
   try {
     
     const result = await applicationController.getApplicationsByMonth(req.user);
-    console.log("result",result)
+
     res.status(200).json(result);
   } catch (error) {
     console.error('Error fetching applications:', error);

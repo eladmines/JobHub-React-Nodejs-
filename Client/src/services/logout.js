@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/logout";
+const API_URL = "logout";
 
 export const logout = async () => {
     const res = await fetch(API_URL, {

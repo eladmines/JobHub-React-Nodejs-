@@ -15,7 +15,7 @@ export function DashBoard() {
   const { data: userData, loading, error, fetchData } = useFetchGet();
 
   useEffect(() => {
-    fetchData("/main");
+    fetchData("main");
   }, []);
 
   if (loading) {

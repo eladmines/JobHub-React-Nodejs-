@@ -30,7 +30,6 @@ SELECT COALESCE((SELECT inserted FROM ins), false) AS inserted;
 
   try {
     const result = await client.query(query, values);
-    console.log(result.rows[0]['inserted'])
     return result.rows[0]['inserted'];
   } catch (error) {
     console.error("Error inserting user:", error);

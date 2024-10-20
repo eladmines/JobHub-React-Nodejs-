@@ -21,9 +21,6 @@ export function UsernameInput({ value,checkValidInputs }) {
   const handleChange = (event) => {
     const res = validateUsername(event.target.value);
     checkValidInputs("username",[event.target.value,res])
-    console.log([event.target.value,res])
-   
-    
   };
 
   return (

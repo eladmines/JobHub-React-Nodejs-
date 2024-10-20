@@ -29,7 +29,7 @@ export function MyGraphChart() {
   const [pl, setPl] = useState([]);
 
   useEffect(() => {
-    fetchData("http://localhost:5000/stats/getPLStats");
+    fetchData("stats/getPLStats");
   }, []);
 
   useEffect(() => {
@@ -86,8 +86,6 @@ export function MyGraphChart() {
       },
     },
   };
-  console.log("data",data)
-  console.log("dataaaaaaaaaaa",pl[0]['jobs_count'].slice(-6))
   return (
     <Card className="info-card sales-card">
       <Card.Header>

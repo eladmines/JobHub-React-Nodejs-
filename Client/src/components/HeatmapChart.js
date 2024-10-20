@@ -19,7 +19,7 @@ export function HeatmapChart() {
   
   useEffect(() => {
     const fetchApplications = async () => {
-      await fetchData("http://localhost:5000/applications/getApplicationsByMonth/");
+      await fetchData("applications/getApplicationsByMonth/");
     };
 
     fetchApplications();

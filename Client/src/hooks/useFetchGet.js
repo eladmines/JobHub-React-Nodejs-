@@ -10,7 +10,7 @@ export function useFetchGet() {
     setLoading(true);
     setError(null);
     try {
-      const result = await getApiService(url);
+      const result = await getApiService("http://localhost:5000/"+url);
       setData(result);
     } catch (error) {
       setError(error);

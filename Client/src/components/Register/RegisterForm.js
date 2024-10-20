@@ -86,14 +86,12 @@ export function RegisterForm() {
 
   const signOut = async (e) => {
     e.preventDefault();
-    await fetchData("http://localhost:5000/user/createuser", validForm);
+    await fetchData("/user/createuser", validForm);
   };
   
   useEffect(() => {
     if(res){
       navigate("/login")
-    }else{
-      alert("Fail")
     }
   }, [res]);
 

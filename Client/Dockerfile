@@ -5,8 +5,7 @@ FROM node:20-alpine as builder
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY ./package.json ./ 
-COPY ./package-lock.json ./
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install
@@ -15,16 +14,5 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+CMD ["npm","run","start"]
 
-# Stage 2: Serve the React application with Nginx
-FROM nginx:alpine
-
-# Copy the build artifacts from the previous stage
-COPY --from=builder /app/build /usr/share/nginx/html
-
-# Copy the Nginx configuration
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-
-# Expose port 80 for Nginx
-EXPOSE 80

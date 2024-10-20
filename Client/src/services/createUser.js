@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/user/createuser";
+const API_URL = "user/createuser";
 
 export const createUser = async (userData) => {
   try {

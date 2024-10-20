@@ -1,4 +1,13 @@
 .news {
-    margin-top: 15px; /* Optional: space above the job list */
-    gap: 10px; /* Optional: space between job items */
+    margin-top: 5px; 
+    gap:5px;
   }
+
+  .recommended-job .card {
+    margin-bottom: 5px; 
+  }
+  
+  .recommended-job .card-body {
+    padding: 5px;
+  }
+  

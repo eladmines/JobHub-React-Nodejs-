@@ -13,7 +13,7 @@ export function RecommendedJobs() {
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    fetchData("http://localhost:5000/jobs/");
+    fetchData("jobs/");
     const storedSkills = localStorage.getItem('skills') ? localStorage.getItem('skills').split(",") : [];
     setSkills(storedSkills);
   }, []);
@@ -47,7 +47,7 @@ const randomIndices = getFourRandomIndices();
     <Card className="info-card sales-card">
       <Card.Header>
         <Card.Title className="text-start">
-          Recommended Jobs <span>| Today</span>
+          Recommended Jobs <span>| For You</span>
           <FaSync
             className="refresh-icon"
             style={{ cursor: 'pointer', float: 'right' }}
@@ -55,14 +55,15 @@ const randomIndices = getFourRandomIndices();
           />
         </Card.Title>
       </Card.Header>
-      <div className="news d-flex flex-column">
-        {Array.from(randomIndices).map(index => (
-          <RecommendedJob
-            key={filteredJobs[index].id}
-            job={filteredJobs[index]}
-          />
-        ))}
-      </div>
+      <div className="news d-flex flex-column mb-0">
+  {Array.from(randomIndices).map(index => (
+    <RecommendedJob
+      key={filteredJobs[index].id}
+      job={filteredJobs[index]}
+      className="mb-2" // Bootstrap class to control spacing
+    />
+  ))}
+</div>
     </Card>
   );
 }

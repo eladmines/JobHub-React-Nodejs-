@@ -1,6 +1,4 @@
 export async function postApiService(url, bodyData) {
-    console.log("Attempting to fetch:", url, "with data:", bodyData); // Log the URL and data
-
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -9,8 +7,8 @@ export async function postApiService(url, bodyData) {
             },
             
             body: JSON.stringify(bodyData),
+            credentials: 'include',
         });
-
         if (!response.ok) {
             const errorText = await response.text();
             console.error("Server error:", errorText);

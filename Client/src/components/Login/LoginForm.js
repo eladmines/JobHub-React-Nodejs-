@@ -24,7 +24,6 @@ export function LoginForm() {
 
 
   const disableLoginButton = () => {
-    console.log("here",validForm)
     return !(validForm['username'][1] && validForm['password'][1]);
   };
 

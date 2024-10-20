@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/jwtValidation";
+const API_URL = "jwtValidation";
 
 export const jwtValidation = async (userData) => {
   try {

@@ -1,18 +1,18 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useFetchPost } from '../hooks/useFetchPost';
 import { NotLoggedInModal } from './NotLoggedInModal';
-export function JobActionButtons({ id, saved, applicated_date }) {
-  const { data, loading, error, fetchData } = useFetchPost();
+
+export function JobActionButtons({ id, saved, applicated_date, handleRemove, endpoint }) {
+  const { data: data, loading, error, fetchData } = useFetchPost();
   const [isSaved, setIsSaved] = useState(saved === 1);
   const [isApplied, setIsApplied] = useState(applicated_date === null);
   const [showModal, setShowModal] = useState(false);
 
+  const handleCloseModel = () => {
+    setShowModal(false);
+  };
 
-  const handleCloseModel = () =>{
-    setShowModal(false)
-  }
-  
   const handleSaveJob = async (id) => {
     const storedSkills = localStorage.getItem("skills");
     if (!storedSkills || storedSkills.length === 0) {
@@ -21,35 +21,40 @@ export function JobActionButtons({ id, saved, applicated_date }) {
     }
     const payload = { jobId: id };
     if (!isSaved) {
-      await fetchData("http://localhost:5000/jobs/savejob", payload);
+      await fetchData("/jobs/savejob", payload);
       setIsSaved(true);
     } else {
-      await fetchData("http://localhost:5000/jobs/removesavedjob", payload);
-      setIsSaved(false); 
+      await fetchData("/jobs/removesavedjob", payload);
+      if (window.location.href.includes(endpoint)) {
+        handleRemove(payload);
+      } else {
+        setIsSaved(!isSaved);
+      }
     }
   };
 
   const handleSaveApp = async (id) => {
     const payload = { jobId: id };
-    
-    // Check if localStorage has skills
     const storedSkills = localStorage.getItem("skills");
     
     if (!storedSkills || storedSkills.length === 0) {
-      // If skills are empty, show the modal
       setShowModal(true);
-      return; // Prevent further execution
+      return;
     }
-    
+
     if (isApplied) {
-      await fetchData("http://localhost:5000/applications/saveApp", payload);
+      await fetchData("/applications/saveApp", payload);
       setIsApplied(!isApplied);
     } else {
-      alert("deleteSaveApp");
-      await fetchData("http://localhost:5000/applications/deleteSaveApp", payload);
-      setIsApplied(!isApplied);
+      await fetchData("/applications/deleteSaveApp", payload);
+      if (window.location.href.includes(endpoint)) {
+        handleRemove(payload);
+      } else {
+        setIsApplied(!isApplied);
+      }
     }
   };
+
 
   return (
     <div>
@@ -68,9 +73,9 @@ export function JobActionButtons({ id, saved, applicated_date }) {
         className="w-100 btn btn-light mb-2"
         onClick={(e) => {
           e.preventDefault();
-          handleSaveApp(id); 
+          handleSaveApp(id);
         }}
-      > 
+      >
         <i className="bi bi-save me-2"></i> {isApplied ? 'Apply' : 'Remove Application'}
       </Button>
       <Button id={id} className="w-100 btn btn-light mb-2">
@@ -80,8 +85,7 @@ export function JobActionButtons({ id, saved, applicated_date }) {
         <i className="bi bi-exclamation-circle me-2"></i> Report
       </Button>
 
-      {/* Modal for not logged in */}
-     <NotLoggedInModal show={showModal} handleClose={handleCloseModel}/>
+      <NotLoggedInModal show={showModal} handleClose={handleCloseModel} />
     </div>
   );
 }

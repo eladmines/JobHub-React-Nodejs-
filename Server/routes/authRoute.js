@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
                 sameSite: 'Strict',
                 maxAge: 3600000 
             });
-           
             return res.status(200).json({ success: true, user: user});
         } else {
             return res.status(401).json({ success: false, message: 'Authentication failed' });
