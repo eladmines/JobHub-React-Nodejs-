@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import { UsernameInput } from '../Inputs/UsernameInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../services/auth';
-import { useSelector, useDispatch } from 'react-redux';
+import {useDispatch } from 'react-redux';
 import { signIn } from '../../actions/signIn';
+import { useFetchPost } from '../../hooks/useFetchPost';
 
 export function LoginForm() {
-  const isLogged = useSelector(state => state);
-  const dispatch = useDispatch(); 
+  const { data: res, loading, error, fetchData } = useFetchPost();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [validForm, setValidForm] = useState({ username: ['',false], password: ['',false] });
+  const [validForm, setValidForm] = useState({
+    username: ['', false],
+    password: ['', false],
+  });
   const [errorMessage, setErrorMessage] = useState('');
 
-  const navigate = useNavigate();
   const handleDataFromChildren = (key, isValid) => {
     setValidForm((prevValidForm) => ({
       ...prevValidForm,
@@ -22,43 +25,45 @@ export function LoginForm() {
     }));
   };
 
-
   const disableLoginButton = () => {
     return !(validForm['username'][1] && validForm['password'][1]);
   };
 
-  const handleLogin = async (e) =>{
+  const handleLogin = async (e) => {
     e.preventDefault();
     const loginDetails = {
       username: validForm['username'][0],
-      password: validForm['password'][0]
-    }
-    var res = await auth(loginDetails);
-    if(res.success){
+      password: validForm['password'][0],
+    };
+    await fetchData('auth', loginDetails);
+  };
+
+  useEffect(() => {
+    if (res && res.success) {
       dispatch(signIn());
-      localStorage.setItem("isLogged",true);
-      localStorage.setItem("skills",res.data.user["skills"]);
-      localStorage.setItem("role",res.data.user["role"]);
-      localStorage.setItem("firstname",res.data.user["firstname"]);
-      localStorage.setItem("lastname",res.data.user["lastname"]);
-      navigate('/')
-    }
-    else{
+      localStorage.setItem('isLogged', true);
+      localStorage.setItem('skills', res.user['skills']);
+      localStorage.setItem('role', res.user['role']);
+      localStorage.setItem('firstname', res.user['firstname']);
+      localStorage.setItem('lastname', res.user['lastname']);
+      navigate('/');
+    } else if (res && !res.success) {
       setErrorMessage('Login failed. Please check your credentials.');
     }
-  };
+  }, [res, dispatch, navigate]);
 
   return (
     <>
       <Form className="needs-validation" noValidate onSubmit={handleLogin}>
         <Row className="g-3">
           <Col xs={12}>
-            <UsernameInput  checkValidInputs={handleDataFromChildren} />
+            <UsernameInput checkValidInputs={handleDataFromChildren} />
           </Col>
-  
+
           <Col xs={12}>
             <PasswordInput checkValidInputs={handleDataFromChildren} />
           </Col>
+
           <Col xs={12}>
             <Button
               type="submit"
@@ -68,7 +73,7 @@ export function LoginForm() {
               Login
             </Button>
           </Col>
-  
+
           <Col xs={12}>
             <p className="small mb-0">
               Don't have an account?
@@ -77,8 +82,8 @@ export function LoginForm() {
           </Col>
         </Row>
       </Form>
-      {errorMessage}
+
+      {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
     </>
   );
-  
 }
