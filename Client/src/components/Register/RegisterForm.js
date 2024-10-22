@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useNa } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Form, Row, Col, Button, Spinner } from 'react-bootstrap';
 import { UsernameInput } from '../Inputs/UsernameInput';
 import { PasswordInput } from '../Inputs/PasswordInput';
@@ -7,7 +7,7 @@ import { NumbersInput } from '../Inputs/NumbersInput';
 import { Language } from '../Languages/Language';
 import { useFetchPost } from '../../hooks/useFetchPost';
 import { useNavigate } from "react-router-dom";
-
+import { FaFile } from 'react-icons/fa';
 import axios from 'axios';
 
 export function RegisterForm() {
@@ -21,7 +21,7 @@ export function RegisterForm() {
     Role: '',
     Company: '',
     cvFile: null,
-    Languages: [],
+    Skills: [],
   });
 
   const navigate = useNavigate();
@@ -31,13 +31,13 @@ export function RegisterForm() {
   const [error, setError] = useState('');
 
   const handleAddLanguage = () => {
-    if(validForm.Languages == null){
+    if(validForm.Skills == null){
       setNewLanguage([newLanguage])
     }
-    else if(newLanguage && !validForm.Languages.includes(newLanguage)) {
+    else if(newLanguage && !validForm.Skills.includes(newLanguage)) {
       setValidForm((prevValidForm) => ({
         ...prevValidForm,
-        Languages: [...prevValidForm.Languages, newLanguage],
+        Skills: [...prevValidForm.Skills, newLanguage],
       }));
       setNewLanguage('');
     } else {
@@ -49,7 +49,7 @@ export function RegisterForm() {
   const handleRemoveLanguage = (languageToRemove) => {
     setValidForm((prevValidForm) => ({
       ...prevValidForm,
-      Languages: prevValidForm.Languages.filter((language) => language !== languageToRemove),
+      Skills: prevValidForm.Skills.filter((language) => language !== languageToRemove),
     }));
   };
 
@@ -86,7 +86,7 @@ export function RegisterForm() {
 
   const signOut = async (e) => {
     e.preventDefault();
-    await fetchData("/user/createuser", validForm);
+    await fetchData("user/createuser", validForm);
   };
   
   useEffect(() => {
@@ -96,6 +96,8 @@ export function RegisterForm() {
   }, [res]);
 
   const fillFormUsingCV = async (e) => {
+   
+    
     e.preventDefault();
     if (!validForm.cvFile) {
       setError('Please upload your CV.');
@@ -122,17 +124,22 @@ export function RegisterForm() {
       });
 
       const { success, data } = response.data;
-
       if (success) {
         setValidForm(prevValidForm => ({
           ...prevValidForm,
           Company: data.Company,
           username: data.Email,
-          FirstName: data.firstname,
-          LastName: data.lastname,
-          Experience: data.Experience,
+          FirstName: data.FirstName,
+          LastName: data.LastName,
+          Experience: data.TotalYearsofExperience,
           Role: data.Role,
-          Languages: data.Languages? data.Languages.split(', ').map(item => item.trim()):null,
+          Skills: [
+            ...(data.ProgrammingLanguages ? 
+                data.ProgrammingLanguages.split(', ').map(item => item.trim()) : []),
+            ...(data.Technologies ? 
+                data.Technologies.split(', ').map(item => item.trim()) : [])
+        ]
+        
         }));
       } else {
         setError('Failed to register user.');
@@ -150,18 +157,27 @@ export function RegisterForm() {
     <Form className="needs-validation" noValidate onSubmit={signOut}>
       <Row className="g-3">
         <Col xs={12}>
+     
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            id="cvUpload"
+                            accept=".pdf, .doc, .docx"
+                            className="d-none"
+                        />
+                        <Button
+                            variant="outline-primary"
+                            className="d-flex align-items-center mt-2 w-100"
+                            onClick={() => document.getElementById('cvUpload').click()}
+                        >
+                            <FaFile className="me-2" />
+                            Choose File
+                        </Button>
+              
           <Button variant="secondary" onClick={fillFormUsingCV} disabled={loading}>
             {loading ? <Spinner animation="border" size="sm" /> : 'Fill Form Using CV'}
           </Button>
-          <Form.Group controlId="formCV">
-            <Form.Control
-              type="file"
-              name="cv"
-              onChange={handleFileChange}
-              accept=".pdf,.doc,.docx"
-              required
-            />
-          </Form.Group>
+          
         </Col>
 
         <Col xs={12}>
@@ -225,8 +241,8 @@ export function RegisterForm() {
 
         <Col xs={12}>
           <Row>
-            {validForm.Languages && validForm.Languages.length > 0 ? (
-              validForm.Languages.map((language) => (
+            {validForm.Skills && validForm.Skills.length > 0 ? (
+              validForm.Skills.map((language) => (
                 <Col xs={6} sm={4} md={3} key={language}>
                   <Language language={language} handleRemoveLanguage={handleRemoveLanguage} />
                 </Col>
