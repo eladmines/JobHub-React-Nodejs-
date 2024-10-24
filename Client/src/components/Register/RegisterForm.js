@@ -72,7 +72,6 @@ export function RegisterForm() {
 
   const handleStateChange = (name, value) => {
     const newValue = value.target ? value.target.value : value;
-    console.log(name,newValue)
     setValidForm((prevValidForm) => ({
       ...prevValidForm,
       [name]: newValue,
@@ -86,6 +85,7 @@ export function RegisterForm() {
 
   const signOut = async (e) => {
     e.preventDefault();
+    
     await fetchData("user/createuser", validForm);
   };
   
@@ -124,6 +124,7 @@ export function RegisterForm() {
       });
 
       const { success, data } = response.data;
+
       if (success) {
         setValidForm(prevValidForm => ({
           ...prevValidForm,
@@ -138,7 +139,9 @@ export function RegisterForm() {
                 data.ProgrammingLanguages.split(', ').map(item => item.trim()) : []),
             ...(data.Technologies ? 
                 data.Technologies.split(', ').map(item => item.trim()) : [])
-        ]
+        ],
+        cvFile:null
+        
         
         }));
       } else {

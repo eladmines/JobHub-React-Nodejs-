@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getApiService } from '../services/getApiService';
+import { SERVER } from '../constants/CompaniesLogo';
 
 export function useFetchGet() {
   const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ export function useFetchGet() {
     setLoading(true);
     setError(null);
     try {
-      const result = await getApiService("/api/"+url); 
+      const result = await getApiService(SERVER+url); 
       setData(result);
     } catch (error) {
       setError(error);

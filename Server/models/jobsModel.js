@@ -37,6 +37,7 @@ async function getSavedJobsNumber(userId) {
     FROM jobs_saved 
     WHERE user_id = $1
   `;
+
   const values = [userId];
   const result = await client.query(query, values);
   return result.rows; 

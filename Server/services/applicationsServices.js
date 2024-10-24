@@ -9,8 +9,8 @@ async function deleteSaveApp(userId,jobId){
     return jobs;
 }
 
-async function getApplicationsCounter(id){
-    const counterApplications = applicationsModel.getApplicationsCounter(id);
+async function getApplicationsCounter(req){
+    const counterApplications = applicationsModel.getApplicationsCounter(req.user);
     return counterApplications;
 }
 
@@ -20,6 +20,7 @@ async function getApplications(req,res){
 }
 
 async function getApplicationsByMonth(req,res){
+    
     const apps = await applicationsModel.getApplicationsByMonth(req);
     return apps;
 }

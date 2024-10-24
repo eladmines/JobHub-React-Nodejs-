@@ -5,4 +5,10 @@ async function statsPLService(){
     return res;
 }
 
-module.exports= {statsPLService}
+async function getNewJobsPerDayStatsService(){
+    const res = statsModel.getNewJobsPerDayStatsModel();
+    return res;
+}
+
+
+module.exports= {statsPLService,getNewJobsPerDayStatsService}

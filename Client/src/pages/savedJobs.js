@@ -10,13 +10,14 @@ import {SearchBarInput} from '../components/Inputs/SearchBarInput';
 import { FaCode } from 'react-icons/fa';
 import { dateDifference } from "../utils/genericHelpers";
 import { FaClock } from 'react-icons/fa'; 
-import { CompaniesLogos } from "../constants/CompaniesLogo";
+import { CompaniesLogos, SERVER } from "../constants/CompaniesLogo";
+
 export function SavedJobs() {
 
   const [inputSearchValue,setInputSearchValue] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
   const { data: jobs, loading, error, fetchData } = useFetchGet();
-
+  
   useEffect(() => {
     fetchData("jobs/getSavedJobs");
     setFilteredJobs(jobs)

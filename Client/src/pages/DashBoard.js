@@ -9,18 +9,68 @@ import { LoadingBar } from '../components/LoadingBar';
 import { MyGraphChart } from '../components/MyGraphChart';
 import { FloatingIcon } from '../components/FloatingIcon';
 import { HeatmapChart } from '../components/HeatmapChart';
+import { UploadCVCard } from '../components/UploadCV';
+import { useSelector } from 'react-redux';
+import { SERVER } from '../constants/CompaniesLogo';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export function DashBoard() {
   const { data: userData, loading, error, fetchData } = useFetchGet();
+  const isLogged = useSelector(state => state);
 
   useEffect(() => {
     fetchData("main");
   }, []);
 
   if (loading) {
-    return <LoadingBar title="Data" />;
+    return (
+      <main id="main" className="main" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Container className="text-center">
+       
+            <LoadingBar title="Loading Data..."/>
+          
+        </Container>
+      </main>
+    )
   }
+  
+  function cvUploadOrTopCards(){
+   
+      if(isLogged){
+        return (
+          <>
+        <Col xxl={4} md={6}>
+          <MainTopCard
+            className="active-applications-card"
+            title="Active Apps"
+            icon={<FaFileAlt />}
+            count={userData ? userData.applicationCount : 0}
+          />
+        </Col>
+        <Col xxl={4} md={6}>
+          <MainTopCard
+            className="next-meetup-card"
+            title="Jobs You Might Like"
+            icon={<FaStar />}
+            count="0"
+          />
+        </Col>
+        <Col xxl={4} md={6}>
+          <MainTopCard
+            className="savedjobs-card"
+            title="Saved Jobs"
+            icon={<FaBookmark />}
+            count={userData ? userData.savedJobsCount : 0}
+          />
+        </Col>
+          </>
+        )
+      }
+          return (
+            <UploadCVCard/>
+          )
+        
+      }
   
   return (
     <main id="main" className="main">
@@ -30,33 +80,11 @@ export function DashBoard() {
           <Row>
             <Col lg={8}>
               <Row>
-                <Col xxl={4} md={6}>
-                  <MainTopCard
-                    className="active-applications-card"
-                    title="Active Apps"
-                    icon={<FaFileAlt />}
-                    count={userData ? userData.applicationCount : 0}
-                  />
-                </Col>
-                <Col xxl={4} md={6}>
-                  <MainTopCard
-                    className="next-meetup-card"
-                    title="Jobs You Might Like"
-                    icon={<FaStar />}
-                    count="0"
-                  />
-                </Col>
-                <Col xxl={4} md={6}>
-                  <MainTopCard
-                    className="savedjobs-card"
-                    title="Saved Jobs"
-                    icon={<FaBookmark />}
-                    count={userData ? userData.savedJobsCount : 0}
-                  />
-                </Col>
+              {cvUploadOrTopCards()}
               </Row>
               <MyGraphChart />
               <HeatmapChart />
+              
               {/* <MyBarChart /> */}
             </Col>
             {/* Right Column */}

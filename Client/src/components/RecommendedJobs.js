@@ -5,6 +5,7 @@ import { RecommendedJob } from './RecomendedJobs/RecomndedJob';
 import { getRandomNumberInRange } from '../utils/genericHelpers';
 import { FaSync } from 'react-icons/fa';
 import './RecomendedJobs/PostItems.css';
+import { SERVER } from '../constants/CompaniesLogo';
 
 export function RecommendedJobs() {
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -12,36 +13,39 @@ export function RecommendedJobs() {
   const { data: jobs, fetchData } = useFetchGet();
   const [refresh, setRefresh] = useState(false);
 
+
   useEffect(() => {
-    fetchData("jobs/");
+    fetchData(`jobs/`);
     const storedSkills = localStorage.getItem('skills') ? localStorage.getItem('skills').split(",") : [];
     setSkills(storedSkills);
   }, []);
 
+
   useEffect(() => {
     if (jobs) {
-      var filtered = jobs;
-        if(skills.length != 0){
-          filtered = jobs.filter((job) => {
-            const skillsMatch =Array.isArray(job.job_qualifications) &&
-              skills.some(skill => job.job_qualifications.includes(skill));
-            return skillsMatch;
-          });
-        }
+      let filtered = jobs;
+      if (skills.length !== 0) {
+        filtered = jobs.filter((job) => {
+          const skillsMatch = Array.isArray(job.job_qualifications) &&
+            skills.some(skill => job.job_qualifications.includes(skill));
+          return skillsMatch;
+        });
+      }
       setFilteredJobs(filtered);
     }
     setRefresh(false);
   }, [jobs, skills, refresh]);
 
-function getFourRandomIndices(){
+
+  const getFourRandomIndices = () => {
     const randomIndices = new Set();
     while (randomIndices.size < 4 && randomIndices.size < filteredJobs.length) {
       randomIndices.add(getRandomNumberInRange(0, filteredJobs.length - 1));
     }
     return randomIndices;
-}
+  };
 
-const randomIndices = getFourRandomIndices();
+  const randomIndices = getFourRandomIndices();
 
   return (
     <Card className="info-card sales-card">
@@ -56,14 +60,14 @@ const randomIndices = getFourRandomIndices();
         </Card.Title>
       </Card.Header>
       <div className="news d-flex flex-column mb-0">
-  {Array.from(randomIndices).map(index => (
-    <RecommendedJob
-      key={filteredJobs[index].id}
-      job={filteredJobs[index]}
-      className="mb-2" // Bootstrap class to control spacing
-    />
-  ))}
-</div>
+        {Array.from(randomIndices).map(index => (
+          <RecommendedJob
+            key={filteredJobs[index].id}
+            job={filteredJobs[index]}
+            className="mb-2"
+          />
+        ))}
+      </div>
     </Card>
   );
 }

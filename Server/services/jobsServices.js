@@ -10,16 +10,17 @@ const saveJob = async (userId,jobId) => {
     return newUser;
   };
   
-  async function getJobs(userId){
-   
-    const jobs = await jobsModel.getAllJobs(userId);
+  async function getJobs(jwtValid,userId){
+    var jobs;
+   if(jwtValid){
+     jobs = await jobsModel.getAllJobs(userId);
+   }
+   else{
+     jobs = await jobsModel.getAllJobs(userId);
+   }
     return jobs;
 }
 
-async function getJobsNoUserId(userId){
-  const jobs = await jobsModel.getAllJobs(userId);
-  return jobs;
-}
 
 
 async function getSavedJobs(req,res){
@@ -27,9 +28,9 @@ async function getSavedJobs(req,res){
     return jobs;
 }
 
-async function getSavedJobsNumber(req,res){
-    const jobs = await jobsModel.getSavedJobsNumber(req);
+async function getSavedJobsNumber(req){
+    const jobs = await jobsModel.getSavedJobsNumber(req.user);
     return jobs;
 }
-module.exports = { getJobs,saveJob,getSavedJobsNumber,getSavedJobs,removeSaveJob,getJobsNoUserId };
+module.exports = { getJobs,saveJob,getSavedJobsNumber,getSavedJobs,removeSaveJob };
        

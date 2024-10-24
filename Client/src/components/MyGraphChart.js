@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import { SERVER } from '../constants/CompaniesLogo';
 
 // Register necessary components
 ChartJS.register(
@@ -42,7 +43,7 @@ export function MyGraphChart() {
     'rgba(54, 162, 235, 1)', // Blue
   ];
   if (pl.length === 0) {
-    return (<h1>No Jobs</h1>);
+    return;
   } 
 
   const datasets = pl.map((item, index) => ({
@@ -91,7 +92,7 @@ export function MyGraphChart() {
       <Card.Header>
       <Card.Title className="text-start">
         
-        Recommended Jobs <span>| Today </span>
+      Popularity of Programming Languages and Technologies <span>| Based on JobHub data </span>
         </Card.Title>
       </Card.Header>
       <Card.Body>

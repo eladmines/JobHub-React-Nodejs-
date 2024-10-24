@@ -1,7 +1,14 @@
 const jobsServices = require('../services/jobsServices');
-async function getJobs(userId){
-    const jobs = await jobsServices.getJobs(userId);
-    return jobs;
+
+async function getJobs(req,res){
+
+    try {
+         const jobs = await jobsServices.getJobs(req.tokenExists,req.user);
+        res.status(200).json(jobs);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
 }
 
 async function getJobsNoUserId(){
@@ -9,24 +16,48 @@ async function getJobsNoUserId(){
     return jobs;
 }
 
-async function getSavedJobsNumber(req,res){
-    const jobs = await jobsServices.getSavedJobsNumber(req);
-    return jobs;
+// Controller
+async function getSavedJobsNumber(req) { 
+    try {
+
+        const result = await jobsServices.getSavedJobsNumber(req); 
+        return result; 
+    } catch (error) {
+        console.error("Error retrieving saved jobs count:", error);
+        throw error; 
+    }
 }
+
 
 async function getSavedJobs(req,res){
-    const jobs = await jobsServices.getSavedJobs(req);
-    return jobs;
+    try {
+        const result = await jobsServices.getSavedJobs(req.user);
+        res.status(200).json(result);
+      } catch (error) {
+        console.error('Error fetching saved jobs:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
 }
 
-async function saveJob(userId,jobId){
-    const jobs = await jobsServices.saveJob(userId,jobId);
-    return jobs;
+async function saveJob(req,res){
+    try {
+      const result = await jobsServices.saveJob(req.user, req.body['jobId']);
+      res.status(200).json(result);
+    } catch (error) {
+      console.error('Error saving job:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
-async function removeSaveJob(userId,jobId){
-    const jobs = await jobsServices.removeSaveJob(userId,jobId);
-    return jobs;
+async function removeSaveJob(req,res){
+    try {
+    
+        const result = await jobsServices.removeSaveJob(req.user, req.body['jobId']);
+        res.status(200).json(result);
+      } catch (error) {
+        console.error('Error saving job:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
 }
 
 module.exports = {
@@ -35,5 +66,4 @@ module.exports = {
     getSavedJobs,
     saveJob,
     removeSaveJob,
-    getJobsNoUserId
 };

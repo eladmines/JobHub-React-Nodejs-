@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../../actions/signIn';
 import { useDispatch } from 'react-redux';
+import { SERVER } from '../../constants/CompaniesLogo';
 export function NavBar() {
   const navigate = useNavigate();
   const isLogged = useSelector(state => state);
@@ -25,7 +26,7 @@ export function NavBar() {
     <nav className="header-nav ms-auto">
       <ul className="d-flex align-items-center">
         <li className="nav-item dropdown pe-3">
-          <span className="d-none d-md-block ps-2">
+          <span className="d-md-block ps-2">
             {isLogged ? (
               <Dropdown align="end">
                 <Dropdown.Toggle className="nav-link nav-profile d-flex align-items-center pe-0" id="dropdown-basic">
@@ -34,7 +35,7 @@ export function NavBar() {
                     alt="Profile" 
                     className="rounded-circle" 
                   />
-                  <span className="d-none d-md-block ps-2">{localStorage.getItem('firstname')[0]}.{localStorage.getItem('lastname')}</span>
+                  <span className="d-md-block ps-2">{localStorage.getItem('firstname')[0]}.{localStorage.getItem('lastname')}</span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className="dropdown-menu-arrow profile">

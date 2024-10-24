@@ -4,6 +4,7 @@ import { getMonth } from '../utils/genericHelpers';
 import Card from "react-bootstrap/esm/Card";
 import { useFetchGet } from '../hooks/useFetchGet';
 import { LoadingBar } from "./LoadingBar";
+import { SERVER } from '../constants/CompaniesLogo';
 
 export function HeatmapChart() {
   const { data: applications, loading, error, fetchData } = useFetchGet();
@@ -19,7 +20,12 @@ export function HeatmapChart() {
   
   useEffect(() => {
     const fetchApplications = async () => {
-      await fetchData("applications/getApplicationsByMonth/");
+      if(localStorage.getItem('skills')){
+        await fetchData("applications/getApplicationsByMonth/");
+      }
+      else{
+        await fetchData("stats/newJobsPerDayStats");
+      }
     };
 
     fetchApplications();
@@ -54,7 +60,7 @@ export function HeatmapChart() {
       padding: { left: 0, right: 0, top: 0, bottom: 0 },
     },
     xaxis: {
-      categories: daysInMonth, // Display days of the month on x-axis
+      categories: daysInMonth,
     },
     yaxis: {
       labels: {
@@ -75,13 +81,13 @@ export function HeatmapChart() {
   };
 
   if (loading) {
-    return <LoadingBar title="Jobs" />;
+    return;
   }
 
   return (
     <Card className="card">
       <Card.Header>
-        <Card.Title>Job Applications Heatmap <span>| Track Your Activity</span></Card.Title>
+        <Card.Title>Job Scraping Heatmap <span>| New opporunities every day </span></Card.Title>
       </Card.Header>
       <Card.Body>
         <Chart options={options} series={applications} type="heatmap" height={140} />

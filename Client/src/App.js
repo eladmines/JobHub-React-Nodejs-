@@ -22,20 +22,16 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 function App() {
   const location = useLocation();
 
-  // Conditionally rendering TopBar and SideBar only if not on login/register
   const showNavigation = location.pathname !== '/login' && location.pathname !== '/register';
 
   return (
     <div>
-      {/* Render TopBar and SideBar only once if not on login/register */}
       {showNavigation && (
         <>
           <TopBar />
           <SideBar />
         </>
       )}
-
-      {/* Page content will be wrapped in a separate div for different routes */}
       <div className="page-content">
         <Routes>
           <Route exact path="/" element={<DashBoard />} />
@@ -50,7 +46,6 @@ function App() {
   );
 }
 
-// Wrap your App component with Router
 const WrappedApp = () => (
   <Router>
     <App />

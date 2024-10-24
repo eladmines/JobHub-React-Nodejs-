@@ -12,6 +12,7 @@ import {ToggleButtonExample} from '../components/Buttons/ToggleButton';
 import { FaClock } from 'react-icons/fa';
 import { dateDifference } from "../utils/genericHelpers";
 import { CompaniesLogos } from "../constants/CompaniesLogo";
+import { SERVER } from '../constants/CompaniesLogo';
 export function Jobs() {
   const [inputSearchValue,setInputSearchValue] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
@@ -78,8 +79,19 @@ export function Jobs() {
   }
   
   if (loading) {
-    return <LoadingBar title="Jobs" />;
+    return (
+      <main id="main" className="main" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Container className="text-center">
+       
+            <LoadingBar title="Loading Jobs..."/>
+          
+        </Container>
+      </main>
+    );
   }
+  
+  
+  
 
 
 
@@ -105,13 +117,13 @@ export function Jobs() {
           <Card key={index} className="card-hover">
             <div id={job.job_id}>
               <Row className="g-0">
-                <Col lg={1} className="d-flex align-items-center justify-content-center">
-                  <Image
-                    src={CompaniesLogos[job.job_company]}
-                    alt={job.job_company || "Company Logo"}
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </Col>
+              <Col xs={6} sm={4} md={3} lg={1} className="d-flex align-items-center justify-content-center">
+  <Image
+    src={CompaniesLogos[job.job_company]}
+    alt={job.job_company || "Company Logo"}
+    style={{ width: "100%", height: "auto" }}
+  />
+</Col>
                 <Col lg={9}>
                   <Card.Body>
                   <Card.Link href={job.job_link} target="_blank"> <h5 className="card-title">

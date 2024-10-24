@@ -1,27 +1,59 @@
 const applicationsServices = require('../services/applicationsServices');
-async function getApplicationsCounter(id){
-    const counterApplications = applicationsServices.getApplicationsCounter(id);
-    return counterApplications;
+async function getApplicationsCounter(req){
+  try {
+
+    const result = await applicationsServices.getApplicationsCounter(req); 
+    return result; 
+} catch (error) {
+    console.error("Error retrieving saved jobs count:", error);
+    throw error; 
+}
+
+    
 }
 
 async function getApplications(req,res){
-    const apps = await applicationsServices.getApplications(req);
-    return apps;
+    try {
+        const result = await applicationsServices.getApplications(req.user);
+        res.status(200).json(result);
+      } catch (error) {
+        console.error('Error fetching applications:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
 }
+
 
 async function getApplicationsByMonth(req,res){
-    const apps = await applicationsServices.getApplicationsByMonth(req);
-    return apps;
+    try {
+    
+        const result = await applicationsServices.getApplicationsByMonth(req.user);
+    
+        res.status(200).json(result);
+      } catch (error) {
+        console.error('Error fetching applications:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
 }
 
-async function saveApp(userId,jobId){
-    const jobs = await applicationsServices.saveApp(userId,jobId);
-    return jobs;
+async function saveApp(req,res){
+
+    try {
+      const result = await applicationController.saveApp(req.user, req.body);
+      res.status(200).json(result);
+    } catch (error) {
+      console.error('Error saving application:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
-async function deleteSaveApp(userId,jobId){
-    const jobs = await applicationsServices.deleteSaveApp(userId,jobId);
-    return jobs;
+async function deleteSaveApp(req,res){
+    try {
+        const result = await applicationsServices.deleteSaveApp(req.user, req.body);
+        res.status(200).json(result);
+      } catch (error) {
+        console.error('Error deleting saved application:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
 }
 
 module.exports = { getApplicationsCounter ,getApplications,saveApp,deleteSaveApp,getApplicationsByMonth};

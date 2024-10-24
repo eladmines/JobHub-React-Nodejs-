@@ -9,6 +9,7 @@ import { CompaniesLogos } from "../constants/CompaniesLogo";
 import '../components/Card/Card.css';
 import { dateDifference } from "../utils/genericHelpers";
 import { FaClock,FaCode } from 'react-icons/fa'; 
+import { SERVER } from '../constants/CompaniesLogo';
 export function Applications() {
   const { data: savedjobs, loading, error, fetchData } = useFetchGet("applications/getApplications");
   const [appliedJobs, setAppliedJobs] = useState([]);
