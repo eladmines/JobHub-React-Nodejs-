@@ -22,7 +22,7 @@ export function Jobs() {
   useEffect(() => {
     fetchData("jobs/");
     setFilteredJobs(jobs);
-  }, [jobs, fetchData]);
+  }, []);
 
   useEffect(() => {
     const storedSkills = localStorage.getItem('skills') ? localStorage.getItem('skills').split(",") : [];
