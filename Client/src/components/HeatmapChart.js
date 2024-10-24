@@ -25,6 +25,7 @@ export function HeatmapChart() {
       }
       else{
         await fetchData("stats/newJobsPerDayStats");
+        
       }
     };
 
@@ -34,6 +35,7 @@ export function HeatmapChart() {
 
   useEffect(() => {
       setAppsMonth(applications); 
+      console.log("applications",applications)
   }, [applications]);
   
 
