@@ -148,8 +148,8 @@ export function UploadCVCard() {
                                 Job Search
                             </Card.Title>
                             <p className="mb-2">
-                                Please upload your CV in PDF or Word format. Ensure that your CV is up to date and highlights your relevant skills and experiences.
-                            </p>
+    Use the search feature to find job opportunities that match your skills and interests. Simply enter relevant keywords or job titles, and we’ll help you discover positions that align with your career goals.
+</p>
                             <InputGroup className="mb-3">
                                 <Form.Control
                                     placeholder="Search for jobs"
