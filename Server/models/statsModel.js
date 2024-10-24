@@ -23,19 +23,15 @@ async function getNewJobsPerDayStatsModel() {
     const result = await client.query(query);
 
     const currentMonth = new Date().getMonth() + 1; 
-
     const dict = [
         { name: months[currentMonth - 3], data: Array(31).fill(0) }, 
         { name: months[currentMonth - 2], data: Array(31).fill(0) }, 
         { name: months[currentMonth - 1], data: Array(31).fill(0) },
     ];
-
     result.rows.forEach((item) => {
         const monthInt = parseInt(item.month, 10);
         const dayInt = parseInt(item.day, 10);
         const jobs_number = parseInt(item.jobs_number, 10);
-        
-
         let dictIndex = null;
         if (monthInt === currentMonth - 2) dictIndex = 0;  
         else if (monthInt === currentMonth - 1) dictIndex = 1;  
